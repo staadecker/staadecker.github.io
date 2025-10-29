@@ -5,7 +5,7 @@
     "@11ty/eleventy": "^3.1.2"
   },
   "scripts": {
-    "build": "yarn exec @11ty/eleventy",
-    "build-ghpages": "yarn exec @11ty/eleventy --pathprefix=/staadecker.github.io/"
+    "build": "yarn exec eleventy",
+    "build-ghpages": "yarn exec eleventy"
   }
 }
