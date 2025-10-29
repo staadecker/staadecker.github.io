@@ -1,0 +1,11 @@
+{
+  "name": "staadecker.github.io",
+  "packageManager": "yarn@4.4.1",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  },
+  "scripts": {
+    "build": "yarn exec @11ty/eleventy",
+    "build-ghpages": "yarn exec @11ty/eleventy --pathprefix=/staadecker.github.io/"
+  }
+}
