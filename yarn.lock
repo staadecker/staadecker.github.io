@@ -211,6 +211,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vscode/markdown-it-katex@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@vscode/markdown-it-katex@npm:1.1.2"
+  dependencies:
+    katex: "npm:^0.16.4"
+  checksum: 10c0/b6d6ff916af0a387e986598850b56735d01faac51de76e8ef7b2d3958269554f005f58c9b09a7d5fe6bfe9f08da4e50149c0e3cb0959243e405883ff83fc01ab
+  languageName: node
+  linkType: hard
+
 "a-sync-waterfall@npm:^1.0.0":
   version: 1.0.1
   resolution: "a-sync-waterfall@npm:1.0.1"
@@ -486,6 +495,13 @@ __metadata:
   version: 5.1.0
   resolution: "commander@npm:5.1.0"
   checksum: 10c0/da9d71dbe4ce039faf1fe9eac3771dca8c11d66963341f62602f7b66e36d2a3f8883407af4f9a37b1db1a55c59c0c1325f186425764c2e963dc1d67aec2a4b6d
+  languageName: node
+  linkType: hard
+
+"commander@npm:^8.3.0":
+  version: 8.3.0
+  resolution: "commander@npm:8.3.0"
+  checksum: 10c0/8b043bb8322ea1c39664a1598a95e0495bfe4ca2fad0d84a92d7d1d8d213e2a155b441d2470c8e08de7c4a28cf2bc6e169211c49e1b21d9f7edc6ae4d9356060
   languageName: node
   linkType: hard
 
@@ -1099,6 +1115,17 @@ __metadata:
   version: 3.1.0
   resolution: "junk@npm:3.1.0"
   checksum: 10c0/820174b9fa9a3af09aeeeeb1022df2481a2b10752ce5f65ac63924a79cb9bba83ea7c288e8d5b448951109742da5ea69a230846f4bf3c17c5c6a1d0603b63db4
+  languageName: node
+  linkType: hard
+
+"katex@npm:^0.16.4":
+  version: 0.16.25
+  resolution: "katex@npm:0.16.25"
+  dependencies:
+    commander: "npm:^8.3.0"
+  bin:
+    katex: cli.js
+  checksum: 10c0/5bb4b1cd914b76d5efb01ee054c1a221ac723be1e38fb260264c6e253036943d301c1741cbf64f840689c6b3942bce21a6da6637de846a428e4c661dc8ee46ab
   languageName: node
   linkType: hard
 
@@ -1762,6 +1789,8 @@ __metadata:
   resolution: "staadecker.github.io@workspace:."
   dependencies:
     "@11ty/eleventy": "npm:^3.1.2"
+    "@vscode/markdown-it-katex": "npm:^1.1.2"
+    markdown-it: "npm:^14.1.0"
   languageName: unknown
   linkType: soft
 
