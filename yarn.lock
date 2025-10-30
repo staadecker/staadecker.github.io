@@ -1204,6 +1204,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"markdown-it-footnote@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "markdown-it-footnote@npm:4.0.0"
+  checksum: 10c0/47aa807b143af211d7eca376c724b05e939e8b5960f6e287c63eca7f121be7ac697ff5601d5b7c89cbde7a32713a66b2a6f375251fad1fe989bd05d07f80e4cd
+  languageName: node
+  linkType: hard
+
 "markdown-it@npm:^14.1.0":
   version: 14.1.0
   resolution: "markdown-it@npm:14.1.0"
@@ -1791,6 +1798,7 @@ __metadata:
     "@11ty/eleventy": "npm:^3.1.2"
     "@vscode/markdown-it-katex": "npm:^1.1.2"
     markdown-it: "npm:^14.1.0"
+    markdown-it-footnote: "npm:^4.0.0"
   languageName: unknown
   linkType: soft
 

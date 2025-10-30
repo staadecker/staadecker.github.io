@@ -1,5 +1,5 @@
 ---
-layout: post.liquid
+layout: base.liquid
 title: "What I learnt in MIT's 14.380 \"Statistics for Economics\" course"
 ---
 

@@ -1,18 +1,23 @@
 import markdownIt from "markdown-it";
-import katex from "@vscode/markdown-it-katex"
+import katex from "@vscode/markdown-it-katex";
+import footnote_plugin from "markdown-it-footnote";
 
 export default async function (eleventyConfig) {
-  let options = {
+  let md_options = {
     html: true,
     breaks: true,
     linkify: true,
     typographer: true,
   };
 
-  eleventyConfig.setLibrary("md", markdownIt(options));
-  eleventyConfig.amendLibrary("md", (mdLib) => mdLib.use(katex.default, { throwOnError: true }));
+  const md = markdownIt(md_options)
+    .use(katex.default, { throwOnError: true })
+    .use(footnote_plugin);
 
-  eleventyConfig.addPassthroughCopy("src/css/fonts");
+  eleventyConfig.setLibrary("md", md);
+
+  eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("src/img");
 }
 
