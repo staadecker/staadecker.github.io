@@ -7,24 +7,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css" integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-  {{ content }}
-  </div>
+  <div class="container">{{ content }}</div>
 
   <footer>
     <p>Code on <a href="https://github.com/staadecker/staadecker.github.io/">GitHub</a>. © Martin Staadecker, 2025. </p>
   </footer>
 
   <script src="/js/littlefoot.js"></script>
-  <script type="application/javascript">
-  littlefoot.littlefoot() // Pass any littlefoot settings here.
-</script>
-<script src="/js/nutshell.js"></script>
-<script>
-Nutshell.setOptions({
-  startOnLoad: true,
-  dontEmbedHeadings: true
-});
-</script>
+  <script type="application/javascript">littlefoot.littlefoot();</script>
+  <script src="/js/nutshell.js"></script>
+  <script>Nutshell.setOptions({dontEmbedHeadings: true});</script>
 </body>
 </html>
