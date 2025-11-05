@@ -9,23 +9,23 @@ I think it's a shame how ineffective our post-secondary education system is at e
 
 In a naive effort to remember what I learnt in my most recent half-semester course at MIT ("14.380: Statistics for Economics"), and because I found the course content quite interesting, I have typed up a version of my class notes that I think should be accessible to a general audience (and my future forgetful self).
 
-I'm also excited to demo some fancy [:expandable explanations](#nutshells) that I think will make the content easier to navigate. Finally, a big shout out goes to Prof. Anna Mikusheva. Her teaching was excellent and her entire course is [available](https://ocw.mit.edu/courses/14-381-statistical-method-in-economics-fall-2018/pages/syllabus/) for free on MIT OpenCourseWare.
+I'm also excited to demo some fancy [:expandable boxes](#nutshells) that I think will make the content easier to navigate. Finally, a big shout out goes to Prof. Anna Mikusheva. Her teaching was excellent and her entire course is freely [available](https://ocw.mit.edu/courses/14-381-statistical-method-in-economics-fall-2018/pages/syllabus/) on MIT OpenCourseWare.
 
-## :x Nutshells
+### :x Nutshells
 
-These expandable explanations are called [nutshells](https://ncase.me/nutshell/), an invention by the fantastic creator Nicky Case that makes it easy to nest explanations, like this one.
+Clicking on an expandable box like you just did will reveal additional details that I didn't want to include in the main flow of the text. I'm hoping you like this feature because I spent lots of time getting it to work! Thanks to the fantastic creator Nicky Case for inventing these (see the [nutshell project](https://ncase.me/nutshell/))!
 
 ## Course overview
 This course covers the mathematical foundations in statistics needed for doing PhD-level economics and econometrics. It is organized as follows:
-1. [Part 1](#part-1-probability-distributions-random-variables-and-asymptotic-properties) covers the foundations of statistics, namely random variables and tools to analyze their behaviors as $n \to \infty$, including the delta method, the central limit theorem and O-notation.
+1. [Part 1](#part-1-probability-distributions-random-variables-and-asymptotic-properties) covers the foundations of statistics, namely random variables and tools to analyze their behaviors as $n \to \infty$, including the delta method, the central limit theorem and O-notation. These tools will be useful to estimate our statistics for large sample sizes.
 2. [Part 2](#part-2-statistics) covers statistics and estimators, particularly what makes a "good" estimator and how to estimate "goodness" through tools like the Rao-Cramer bound and Fisher information.
 3. [Part 3](#part-3-statistical-tests) covers statistical tests.
 
-Familiarity with the [:taylor series expansion](#taylor-series) and other math concepts is helpful.
+Familiarity with calculus, matrix algebra and other math concepts like the [:taylor series expansion](#x-taylor-series) is important.
 
-### :x Taylor Series
+#### :x Taylor Series
 
-$f(x)$ can be expressed as follows using the infinite [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series).
+We will often approximate $f(x) - f(a)$ using the [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series):
 
 $$f(x)-f(a)=\frac{f'(a)}{1!}(x-a)+\frac{f''(a)}{2!}(x-a)^2+\ldots$$
 
@@ -33,20 +33,11 @@ When a finite number of terms are used, the approximation is most accurate near 
 
 ## Part 1: Probability distributions, random variables, and asymptotic properties
 
-Formally, **probability** is a field of mathematics built upon [:a few axioms](../stats_details#note-probability-space-and-the-formal-definition-of-probability). The interpretation of these axioms and their meaning in the real-world is a contested topic of philosophy (see [What is The Chance of An Earthquake](https://statistics.berkeley.edu/sites/default/files/tech-reports/611.pdf)), but for our purposes,  probability begins with the concept of a random variable.
+What is probability?
 
-A **random variable** is a mathematical object *dependent on random events*. Examples include:
-- A random variable representing the result of a coin toss (range: $\{H, T\}$).
-- A random variable representing the average height of the next 10 people you see.
-- A random variable representing the temperature tomorrow.
+Formally, **probability** is a field of mathematics built upon [:a few axioms](#x-probability-space-and-the-formal-definition-of-probability). The interpretation of these axioms and their meaning in the real-world is a contested topic of philosophy (see [What is The Chance of An Earthquake](https://statistics.berkeley.edu/sites/default/files/tech-reports/611.pdf)), but for our purposes, probability begins with the concept of a random variable.
 
-## x: Nutshells
-
-These expandable boxes called nutshells , an invention by Nicky Case a creator a like.
-
-
-
-##### :x Note: Probability Space and the Formal Definition of Probability
+#### :x Probability Space and the Formal Definition of Probability
 The formal definition of probability is based on measure theory. Measure theory helps tie seemingly different mathematical concepts together including magnitude, mass, probability, and geometrical measures like length, area, volume. TODO
 
 The philosophy of frequentist statistics is that there exists an ideal world with potential outcomes $\Omega$. Every experiment produces a realization $\omega \in \Omega$. Here $w$ need not be a number; $\omega$ could be the description "the first die rolled a 5 and the second rolled a 4". Random variables are functions that map these realizations $w$ to the space of real numbers $\mathbb{R}$. Importantly, a random variable also has an associated cumulative probability distribution $F_X(t): \mathbb{R} \to [0,1]$. This cdf requires a probability measure $Pr$, a function that maps sets to the probability of observing that set. While it might be tempting to say $Pr: \Omega \to [0,1]$, it is technically more accurate to define an intermediate set $\mathcal{F}$ which constitutes all possible measurable subsets of $w$ as this richer space $F$ allows for a more interesting $Pr: \mathcal{F} \to [0,1]$. Summarizing:
@@ -55,43 +46,154 @@ The philosophy of frequentist statistics is that there exists an ideal world wit
 - $Pr: \mathcal{F} \to [0,1]$ is a probability measure
 - $X: \Omega \to \mathbb{R}$ is a random variable mapping outcomes to a number associated with a cdf defined using $Pr$ and $\mathcal{F}$
 
-A random variable is a mathematical object representing an random event with a known distribution. 
+### Random variables
 
-Importantly, random variables have a probability distribution. $X \sim F_x$ indicates that $X$ is a random variable with cumulative probability distribution $F_x(t) = P \{X \leq t\}$. Some definitions and useful properties:
-- Probability density function $f_x(t)=\frac{dF_x(t)}{dt}$.
-- Expected value (*linear operator*) $E[g(X)] = \int_{-\infty}^{\infty} g(t) f_x(t) dt$ 
-- Mean $\mu = E[X]$
+A **random variable** is a mathematical object *dependent on random events*. Examples include:
+- A random variable representing the result of a coin toss (range: $\{H, T\}$).
+- A random variable representing the average height of the next 10 people you see.
+- A random variable representing the temperature tomorrow.
+
+Importantly, random variables have a probability distribution. $X \sim F_x$ indicates that $X$ is a random variable with cumulative probability distribution (cdf) $F_x(t) = P \{X \leq t\}$. Key tools to work with random variables include the [:probability density function](#x-def-pdf) (pdf) $f_X(t)$, the [:expected value function](#x-def-expected-value) $E[X]$, [:variance](#x-variance) $V(X)$, [:moments](#x-moments), and [:important properties](#x-properties-of-random-variables) of these abstractions.
+
+#### :x Def. pdf
+
+The probability density function is a proxy for the relative likelihood of obtaining a given outcome.
+$$f_X(t)=\frac{d}{dt}F_X(t)$$
+$$\int_{-\infty}^{\infty} f_X(t) = 1$$
+
+#### :x Def. expected value
+
+The expected value function can be thought of as the _mean_ of an expression $g(X)$ containing random variables.
+
+$$E[g(X)] = \int_{-\infty}^{\infty}g(x)f_X(t)dt$$
+
+In fact, the mean $\mu$ of a random variable is _defined_ as $\mu=E[X]$.
+
+#### :x Variance
+
+Variance represents the _spread_ of the probability density function; how much variance there is across different draws from the same distribution. It is defined as the expected distance squared from the mean:
+$$Var(X) = E[(X-E[X])^2]$$
+
+#### :x Moments
+
+The mean and variance are special cases of moments: mathematical objects that help characterize a distribution.
+
+- 1st moment (mean) $E[X]$
 - k-th moment $E[X^k]$
+- 2nd central moment (variance) $E[(X-E[X])^2]$
 - k-th central moment $E\left[(X-E[X])^k\right]$
-- Variance $\sigma_X^2 = V(X) = E\left[(X - E[X])^2\right]=E[X^2] - E[X]^2$
-- Quadratic in scaling: $V(aX)=a^2V(X)$
-- Shift agnostic: $V(X+a)=V(X)$
+
+#### :x Properties of random variables
+
+- Expected value function is linear
+	- $E[X+Y] = E[X] + E[Y]$
+	- $E[aX] = aE[X]$
+- Variance is not
+	- $Var(X+Y) \neq Var(X) + Var(Y)$
+	- $Var(X+a)=Var(X)$ (shift agnostic)
+	- $Var(aX)=a^2Var(X)$
+An often used property is:
+$$Var(X) =E[X^2] - E[X]^2$$
+
+Note that when $X$ has mean 0, $Var(X) = E[X^2]$.
 
 ### Joint distributions
-Two random variables could be correlated. For example, $X_t$ and $X_{t+1}$ in a sequence of random events. Or $X$ and $Y$ being characteristics of a person being drawn from a population (e.g. income and education). Or the daily returns of stock $A$ and $B$. Some definitions and properties:
-- Joint cumulative distribution: $F_{X,Y} (x,y)=P\{ X\leq x,Y\leq y\}$
-- Marginal distribution of $X$: $f_X(x) = P\{X \leq x\} = \int_{-\infty}^{\infty} f(x,y) dy$
-- Conditional distribution of $Y$ given $X=x$: $f_{Y|X}(y|x) = \frac{f_{X,Y}(x,y)}{f_X(x)}$ 
-- Law of iterated expectations: $E[g(X)Y] = E\left[E[g(X)Y | X]\right] = E\left[g(X) E[Y | X]\right]$
-- Covariance (symmetric, linear in scaling, shift-agnostic): $\text{cov}(X,Y) = E[(X-E[X])(Y-E[Y])] = E[XY] - E[X]E[Y]$
-- $V(X+Y)=V(X)+V(Y)+2\text{cov}(X,Y)$
-- $-1 \leq (corr(X,Y) := cov(X,Y) / \sqrt{V(X)V(Y)}) \leq 1$
-- If $X$ and $Y$ are independent
-	- $E[XY] = E[X]E[Y]$
-	- $f_{Y|X}(y|x) = f_Y(y) \quad \forall x$
-	- $V(X + Y + Z + \ldots) = V(X)+V(Y)+V(Z)+\ldots$
-### Common distributions
-Bernoulli, Poisson, Uniform, Normal
-TODO add table with variance and others
+Two random variables could be correlated. For example, $X_t$ and $X_{t+1}$ in a sequence of random events. Or $X$ and $Y$ being characteristics of a person being drawn from a population (e.g. income and education). Or the daily returns of stock $A$ and $B$. Key definitions including the [:joint cumulative distribution](#x-joint-cumulative-distribution), [:marginal distribution](#x-marginal-distribution), [:conditional distributions](#x-conditional-distribution), [:law of iterated expectations](#x-lie), [:covariance](#x-covariance), and [:properties of independent variables](#x-independent-properties).
 
-#### Multi-variate and conditional normal distribution
+#### :x Joint cumulative distribution
+
+$$F_{X,Y} (x,y)=P\{ X\leq x,Y\leq y\}$$
+
+#### :x Marginal distribution
+
+$$f_X(x) = P\{X \leq x\} = \int_{-\infty}^{\infty} f(x,y) dy$$
+
+#### :x Conditional distribution
+
+The conditional distribution of $Y$ given $X=x$ is
+$$f_{Y|X}(y|x) = \frac{f_{X,Y}(x,y)}{f_X(x)}$$
+
+#### :x LIE
+
+The law of iterated expectations is:
+
+$$E[Y] = E[E[Y|X]]$$
+
+Or more generally:
+
+$$E[g(X)Y] = E\left[g(X) E[Y | X]\right]$$
+
+#### :x Covariance
+
+The covariance operator is symmetric, linear in scaling and shift agnostic. It is defined as
+
+$$\text{cov}(X,Y) = E[(X-E[X])(Y-E[Y])]$$
+
+Two useful properties are:
+
+$$Var(X+Y)=Var(X)+Var(Y)+2\text{cov}(X,Y)$$
+
+and
+
+$$\text{cov}(X,Y) = E[XY] - E[X]E[Y]$$
+
+Notice that if $X$ or $Y$ have mean $0$,
+
+$$\text{cov}(X,Y) = E[XY]$$
+
+Covariance can be normalized to produce the following useful metric.
+
+$$corr(X,Y) = \frac{cov(X,Y)}{\sqrt{V(X)V(Y)}}$$
+
+where 
+
+$$-1 \leq corr(X,Y) \leq 1$$
+
+
+#### :x Independent properties
+
+If and only if $X$ and $Y$ are independent, the following properties are true:
+	
+- $E[XY] = E[X]E[Y]$
+
+- $f_{Y|X}(y|x) = f_Y(y) \quad \forall x$
+
+- $V(X + Y + Z + \ldots) = V(X)+V(Y)+V(Z)+\ldots$
+
+### Common distributions
+
+Familiarity with the following distributions is helpful.
+
+<div class="wide">
+<div style="min-width:800px">
+
+| | Poisson | Binomial | Normal | Multivariate normal | $\chi_k^2$ |
+| --- | --- | --- | --- | --- | --- |
+| Parameters | $\lambda$ | $(n,p)$ | $(\mu,\sigma^2)$ | $(\mu,\Sigma)\in(\mathbb{R}^n,\mathbb{R}^{n\times n})$ | $k$ |
+| PDF / PMF | $\frac{\lambda^xe^{-\lambda}}{x!}$ | $\frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}$ | $\frac{1}{\sqrt{2\pi\sigma^2}}\exp{\frac{-(x-\mu)^2}{2\sigma^2}}$ | $\frac{\exp(-(x-\mu)^T\Sigma^{-1}(x-\mu)/2)}{(2\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}$ | |
+| Mean | $\lambda$ | $np$ | $\mu$ | $\mu$ | $k$ |
+| Variance | $\lambda$ | $np(1-p)$ | $\sigma^2$ | $\Sigma$ | $2k$ |
+| Minimum sufficient<br/>statistic for n iid | $\Sigma X_i$ | $X$ | $\bar X \to \mu$ | | |
+| Notes | | "Bernoulli" when $n=1$. | | | |
+</div>
+</div>
+
+#### :x Bernoulli distribution
+
+#### :x Poisson distribution
+
+#### :x Uniform distribution
+
+#### :x Normal distribution
+
+#### :x Multi-variate normal distribution
 TODO
 
 
 ### Limits, convergence, and asymptotics
 We are interested in the behavior of a sequence of random variables $X_1, X_2, ..., X_n$ as $n \to \infty$. Is $X_\infty$ the "same" as some, perhaps easier to compute, $Y$? What approximations can we make for large $n$? 
 
-To answer this question we really on the concepts of limits and their epsilon-delta formulation. Recall the $\epsilon-\delta$ definition of $\text{lim}_{n\to \infty}x_n=L$ is:
+To answer this question we rely on the concepts of limits and their epsilon-delta formulation. Recall the $\epsilon-\delta$ definition of $\text{lim}_{n\to \infty}x_n=L$ is:
 $$\forall\epsilon>0,\exists N>0,s.t.,\forall n\geq N,|x_n-L|<\epsilon$$
 For random variables, the concept is similar except the limit is on the *probability* of a deviation. $X_n$ **converges in probability** to $X$ (as $n$ grows large), written $X_n \to_P X$, if:
 $$\forall C>0,\forall\epsilon,\exists N>0,s.t.,\forall n\geq N,P\{|X_n-X|>C\}<\epsilon$$
@@ -120,7 +222,7 @@ Notice how this is only slightly different from the definition of convergence in
 
 Some additional useful rules:
 - For *non-negative* random variable $X$, the likelihood of tail events is capped by Markov's theorem, $P\{X\geq t\}\leq E[X]/t$.
-- For all random variables, the likelihood of tail events is capped by Chebyskev's inequality, $P\{|X-\mu|  \geq t\} \leq Var(X) / t^2$
+- For all random variables, the likelihood of tail events is capped by Chebyskev's inequality, $P\{|X-\mu| \geq t\} \leq Var(X) / t^2$
 - Holders inequality todo
 - **Law of large numbers** (LLN): For iid random variables $X_1, X_2, \ldots$, with finite variance their average $\bar{X_n} \to_p E[X_i]$.
 - **Central limit theorem** (defines *rate* of convergence). That is $\bar{X_n}'\sqrt{n} \Rightarrow N(0,\sigma^2)$. Which implies $\bar{X_n}=O(1/\sqrt{n})$. (The $'$ indicates that we've normalized)
@@ -160,7 +262,7 @@ Notice how the pdf/pmf has been split into two parts: $g$ depends only on the st
 
 Note that $T$ could actually be several statistics (a vector of statistics if you like) that, combined, capture the information in $\theta$ (or more parameters). There is not always one sufficient statistic per parameter. (For example, estimating $\theta$ in $U[\theta, 1+\theta]$ involves two sufficient statistics $\text{min}_{x_i}$ and $\text{max}_{x_i}$!)
 
-Technically, the entire sample $X_n$ is a sufficient statistic of $X$ (with $n$ terms) but this is not very helpful. A **minimal sufficient statistic** is one that contains all the information on the parameters while being as "small" as possible. That given a sufficient statistic $T^*(X)$ we can say it is minimal if it can be computed from any other sufficient statistic (i.e. $r$ exists and $T^*(X) = r(T(X))$). If this weren't possible, this means that there's another sufficient statistic with less information than $T^*(X)$ so $T^*(X)$ is not minimal.    
+Technically, the entire sample $X_n$ is a sufficient statistic of $X$ (with $n$ terms) but this is not very helpful. A **minimal sufficient statistic** is one that contains all the information on the parameters while being as "small" as possible. That given a sufficient statistic $T^*(X)$ we can say it is minimal if it can be computed from any other sufficient statistic (i.e. $r$ exists and $T^*(X) = r(T(X))$). If this weren't possible, this means that there's another sufficient statistic with less information than $T^*(X)$ so $T^*(X)$ is not minimal. 
 
 The **efficiency** of an estimator is measured using the mean-squared error: $MSE = E[(\hat \theta - \theta)^2]$. A useful property is $MSE(\hat \theta)=Var(\hat \theta) + [\text{Bias}(\hat \theta)]^2$. (proof by expansion and de-meaning)
 

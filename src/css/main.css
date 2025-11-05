@@ -17,7 +17,7 @@ body {
 /* ====== BODY ====== */
 body {
     font-family: "Merriweather", Georgia, serif;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.6;
     color: #2b2b2b;
     /* softer dark gray for text */
@@ -116,6 +116,7 @@ li {
 }
 
 /* ====== FOOTER ====== */
+
 footer {
     font-size: 0.9rem;
     color: #666;
@@ -123,4 +124,66 @@ footer {
     margin-top: 4rem;
     padding-top: 2rem;
     border-top: 1px solid #e2e2e2;
+}
+
+/* ====== KATEX RESPONSIVE FIX ====== */
+
+/* Prevent KaTeX math from forcing horizontal scroll */
+.katex {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal; /* allow wrapping for long equations */
+}
+
+/* For display equations (block math) */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+/* Optional: prevent container from expanding due to long math */
+.katex-display > .katex {
+  white-space: nowrap;
+}
+
+
+/* Wrapper for wide elements like tables */
+.wide {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto; /* Enables horizontal scroll on smaller screens */
+  -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+
+  display: flex;
+  justify-content: center;
+}
+
+/* Make sure the content (like a table) takes up its natural width */
+.wide > table {
+  width: 100%;
+  margin: 0 auto; /* extra safety for centering */
+  border-collapse: collapse;
+}
+
+/* Optional: Better scrollbar visibility */
+.wide::-webkit-scrollbar {
+  height: 8px;
+}
+
+.wide::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* For larger screens, let it stretch */
+@media (min-width: 1024px) {
+  .wide {
+    overflow-x: visible;
+  }
 }

@@ -3,42 +3,6 @@ layout: base.liquid
 ---
 # Home
 
-$$ x $$
+See posts:
 
-$x$
-
-Footnote test [^1].
-
-[^1]: This is the footnote text.
-
-Link to [:other section](#other-section).
-
-and now we continue
-
-External link to [Google](https://www.google.com).
-
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-
-## Other section
-
-bla bla
+- [What I learnt in MIT's 14.380 \"Statistics for Economics\" course](./post/stats)
