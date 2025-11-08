@@ -191,27 +191,82 @@ TODO
 
 
 ### Limits, convergence, and asymptotics
-We are interested in the behavior of a sequence of random variables $X_1, X_2, ..., X_n$ as $n \to \infty$. Is $X_\infty$ the "same" as some, perhaps easier to compute, $Y$? What approximations can we make for large $n$? 
 
-To answer this question we rely on the concepts of limits and their epsilon-delta formulation. Recall the $\epsilon-\delta$ definition of $\text{lim}_{n\to \infty}x_n=L$ is:
-$$\forall\epsilon>0,\exists N>0,s.t.,\forall n\geq N,|x_n-L|<\epsilon$$
-For random variables, the concept is similar except the limit is on the *probability* of a deviation. $X_n$ **converges in probability** to $X$ (as $n$ grows large), written $X_n \to_P X$, if:
-$$\forall C>0,\forall\epsilon,\exists N>0,s.t.,\forall n\geq N,P\{|X_n-X|>C\}<\epsilon$$
-In other words, as $n\to\infty$, the probability distribution of the random variable $X_n - X$ must collapse onto the point $0$. Notice how $X_n$ and $X$ must exist over the same probability space. It would be meaningless to subtract the expected outcome of a die roll with the expected temperature tomorrow and say that they converge.
+Later in the course, we will want to make approximations for large sample sizes. For example, we might want to argue that some random variable of our current sample $X_n$ is actually well approximated by the random variable for a theoretically infinite sample $X_\infty$, when $n$ is large. Such arguments can simply our statistics since often $X_\infty$ is a simpler expression to work with than $X_n$.
 
-There is also a weaker concept of convergence. **Convergence in distribution** occurs when the cdf of $X_n$ and $X$ line up as $n\to\infty$. Formally, $X_n \Rightarrow X$ if $\forall x ,\lim_{n \to \infty} F_{X_n}(x) = F_X(x)$. Notice how the definition doesn't depend on random variables, it's just your typical limit. Convergence in probability implies the weaker convergence in distribution, but not vice versa.
+To make such arguments, we must introduce mathematical tools to deal with _asymptotics_—the behavior of random variables as $n$ approaches infinity (denoted $n \to \infty$).
 
-The **continuous mapping theorem** (CMT) says that if $X_n$ converges to $X$, then $g(X_n)$ converges to $g(X)$ (applies to both types of convergence).
+You may be familiar with limits and their [:delta-epsilon formalization](#x-delta-epsilon-formalization) to describe the behavior of (non-random) numbers that approach infinity. An extension of this same concept exists for random variables.
 
-The **Slutsky theorem** says:
-- If, $X_n\to_p X$ and $Y_n \to_p Y$, then $X_n + Y_n\to_p X+Y$ and $X_nY_n \to_p XY$.
-- If, $X_n\Rightarrow X$ and $Y_n \to_p c$, then $X_n + Y_n\Rightarrow X+c$ and $X_nY_n \Rightarrow cX$.
+Specifically, there are two notable ways in which a random variable $X_n$ can be said to converge onto a different random variable $Y$. 
 
-**O-notation** is a helpful way of describing asymptotic behavior. $o_p(b_n)$ implies that $b_n$ grows asymptotically *faster than* $X_n$, or formally, $X_n / b_n \to_p 0$. $O_p(b_n)$ means that $b_n$ grows *at least as fast* as $X_n$, or formally:
-$$\exists C,\forall\epsilon>0,\exists N>0,s.t.,\forall n\geq N,P\{|X_n/b_n|>C\}<\epsilon$$
-Notice how this is only slightly different from the definition of convergence in probability and the stricter $o_p(b_n)$ bound. Some relevant properties:
-- Intuitively, $O_p(1)$ means a series is stochastically bounded and $o_p(1)$ means a series approaches $0$ (stochastically).
-- $X_n \Rightarrow N(\mu,\sigma^2)$, then $X_n=O_p(1)$.
+**Convergence in distribution** (denoted $X_n \stackrel{d}{\to}Y$) occurs when the probability distribution of $X_n$ approaches that of $Y$ (the CDFs "line up"). Distribution-wise $X_n$ and $Y$ are identical in the limit. However, the _outcomes_ of a draw of $X_n$ and $Y$ need not be identical. For example, say you have two magic coins that always land on opposite faces. When you toss them simultaneously one always lands head and the other tail. The distribution of both coins are equal (50% heads, 50% tails) but their realizations are not.
+
+**Convergence in probability** (denoted $X_n \stackrel{p}{\to}Y$) is this stronger idea that not only do the distributions of $X_n$ and $Y$ match in the limit, but also the _realizations_ of any individual draw match (in the limit). Note that talking about convergence in probability only ever makes sense when comparing two random variables resulting from the same draw (from the same "probability space"). (If the magic coins don't come from the same toss, you can't talk about their outcomes matching.)
+
+Both types of convergence have [:formal definitions](#x-definitions-of-convergence) that are useful to know and convergence in probability implies convergence in distribution.
+
+Now some useful mathematical tools.
+
+First the **law of large numbers** (LLN) states that the average of $n$ independent and identically distributed (iid) random variables converges in probability to their expected value: $\bar{X_n} \stackrel{p}{\to} E[X_i]$.
+
+But how fast does an average converge? The **central limit theorem** says that the variance of an average shrinks at rate $\frac{1}{\sqrt{n}}$. You can think of this as saying $\bar{X_n} \stackrel{d}{\to}N(E[X_i], \frac{\sigma^2}{n})$ although technically we cannot converge onto a distribution that itself is changing with $n$ and must instead write the CTL as:
+
+$$\sqrt{n}(\bar{X_n}-\mu_X) \stackrel{d}{\to} N(0,\sigma^2)$$
+
+A convenient way to deal with _rates_ of convergence is using **O-notation**. We write $X_n \in o(b_n)$ if $X_n$ grows slower than $b_n$ and $X_n \in O(b_n)$ if $X_n$ grows slower or just as fast (but no faster) than $b_n$. For example, the CLT implies $\bar X_n \in O(n^{-1/2})=o_p(1)$. Using o-notation and [:its properties and formal definitions](#x-o-notation) we can more easily make arguments about rates of convergence.
+
+What about the properties of _functions of random variables_? The **continuous mapping theorem** (CMT) says that if $X_n$ converges to $X$ in probability/distribution, then $g(X_n)$ converges to $g(X)$ in probability/distribution.
+
+Moreover, the **delta method** calculates the rate of convergence $g(X)$ given that of $X$. If $\sqrt{n}(X_n-\mu)\stackrel{d}{\to} N(0,\sigma^2)$ and $g'(\mu) \neq 0$, then $\sqrt{n}(g(X_n) - g(\mu)) \stackrel{d}{\to} N(0, \sigma^2 g'(\mu)^2)$. It's multivariate extension is, if $\sqrt{n}(\vec{X_n}-\vec{\mu})\stackrel{d}{\to} N(0,\Sigma)$ and $g: \mathbb{R}^k \to \mathbb{R}$ is twice differentiable, then $\sqrt{n}(g(X_n) - g(\mu)) \stackrel{d}{\to} N(0, \nabla g (\mu)^T \Sigma \nabla g (\mu))$.
+
+The **Slutsky theorem** says that sum or product of two variables that converge in probability also converges in probability (if, $X_n\stackrel{p}{\to} X$ and $Y_n \stackrel{p}{\to} Y$, then $X_n + Y_n\stackrel{p}{\to} X+Y$ and $X_nY_n \stackrel{p}{\to} XY$). While this is not true for two variables that converge in distribution, we can say that if $X_n\stackrel{d}{\to} X$ and $Y_n \stackrel{p}{\to} c$, then $X_n + Y_n\stackrel{d}{\to} X+c$ and $X_nY_n \stackrel{d}{\to} cX$.
+
+Finally the following theorems are also helpful:
+
+- Markov's theorem caps the probability of tail events for a *non-negative* random variable $X$: $P\{X\geq t\}\leq E[X]/t$.
+- Chebyskev's inequality caps the probability of tail events for any random variable: $P\{|X-\mu| \geq t\} \leq Var(X) / t^2$
+- [Holders inequality](https://en.wikipedia.org/wiki/H%C3%B6lder%27s_inequality)
+
+#### :x Delta-epsilon formalization
+
+The formal definition of a limit is that we can say that $f(n)$ approaches some number $L$ in the limit $n \to \infty$, if, given a distance $\epsilon$, we can always find a threshold $N$ where for all $n > N$ the result $f(n)$ is within distance $\epsilon$ from $L$ Mathematically, $\lim_{n\to\infty} f(n) = L$ means that
+
+$$\forall \epsilon > 0, \exists N > 0 \text{ such that } \forall n \geq N, |f(n) - L| < \epsilon$$
+
+#### :x Definitions of convergence
+
+$X_n$ is said to converge _in distribution_ onto $Y$ (denoted $X_n \stackrel{d}{\to}Y$) if:
+
+$$\forall x, \lim_{n\to\infty} F_{X_n}(x) = F_Y(x)$$
+
+Or, using delta-epsilon notation:
+
+$$\forall x,\forall \epsilon>0, \exists N, \text{ such that }\forall n>N, |F_{X_n}(x)-F_Y(x)|<\epsilon$$
+
+$X_n$ is said to converge _in probability_ onto $Y$ (denoted $X_n \stackrel{p}{\to}Y$) if the likelihood of a significant deviation in any one draw ($P\{|X_n - Y|>C\}$) approaches zero. Using delta-epsilon notation:
+
+$$\forall C>0,\forall\epsilon>0,\exists N,s.t.,\forall n\geq N,P\{|X_n-Y|>C\}<\epsilon$$
+
+In other words, as $n\to\infty$, the probability distribution of the random variable $X_n - Y$ must collapse onto the point $0$. Again, notice how $X_n$ and $X$ must exist over the same probability space. It would be meaningless to subtract the expected outcome of a die roll with that of a different die roll unless the dies were always rolled simultaneously.
+
+#### :x O-notation
+
+Formally, we say $X_n \in o_p(b_n)$ if $X_n / b_n \stackrel{p}{\to} 0$ which in delta-epsilon notation is:
+
+$$\forall C>0,\forall\epsilon>0,\exists N,s.t.,\forall n\geq N,P\{|X_n/b_n|>C\}<\epsilon$$
+
+
+We say, $X_n\in O_p(b_n)$ if 
+
+$$\exists C,\forall\epsilon>0,\exists N,s.t.,\forall n\geq N,P\{|X_n/b_n|>C\}<\epsilon$$
+
+Notice the only slight difference between both definitions and how $o_p(b_n)$ is stricter than $O_p(b_n)$. 
+
+
+Some helpful properties of o-notation:
+- Intuitively, $O_p(1)$ means a series is stochastically bounded (doesn't grow to infinity) and $o_p(1)$ means a series approaches $0$ (stochastically).
+- $X_n \stackrel{d}{\to} N(\mu,\sigma^2)$, then $X_n=O_p(1)$.
 - $o_p(c \times b_n) = o_p(b_n)$
 - $O_p(n^{-\delta}) \to o_p(1) \quad (\delta>0)$
 - $o_p(b_n) \to O_p(b_n)$
@@ -220,14 +275,8 @@ Notice how this is only slightly different from the definition of convergence in
 - $O_p(n^\alpha) + O_p(n^\beta) \to O_p(max\{n^\alpha,n^\beta\})$
 - $O_p(n^\alpha) + o_p(n^\alpha) \to O_p(n^\alpha)$
 
-Some additional useful rules:
-- For *non-negative* random variable $X$, the likelihood of tail events is capped by Markov's theorem, $P\{X\geq t\}\leq E[X]/t$.
-- For all random variables, the likelihood of tail events is capped by Chebyskev's inequality, $P\{|X-\mu| \geq t\} \leq Var(X) / t^2$
-- Holders inequality todo
-- **Law of large numbers** (LLN): For iid random variables $X_1, X_2, \ldots$, with finite variance their average $\bar{X_n} \to_p E[X_i]$.
-- **Central limit theorem** (defines *rate* of convergence). That is $\bar{X_n}'\sqrt{n} \Rightarrow N(0,\sigma^2)$. Which implies $\bar{X_n}=O(1/\sqrt{n})$. (The $'$ indicates that we've normalized)
 
-The **delta method** calculates the rate of convergence $g(X)$ given that of $X$. If $\sqrt{n}(X_n-\mu)\Rightarrow N(0,\sigma^2)$ and $g'(\mu) \neq 0$, then $\sqrt{n}(g(X_n) - g(\mu)) \Rightarrow N(0, \sigma^2 g'(\mu)^2)$. It's multivariate extension is, if $\sqrt{n}(\vec{X_n}-\vec{\mu})\Rightarrow N(0,\Sigma)$ and $g: \mathbb{R}^k \to \mathbb{R}$ is twice differentiable, then $\sqrt{n}(g(X_n) - g(\mu)) \Rightarrow N(0, \nabla g (\mu)^T \Sigma \nabla g (\mu))$. 
+
 ## Part 2: Statistics
 Much like Plato's cave, the philosophy of frequentist statistics is that there exists an ideal world that we cannot observe directly. Our real world is a sample of this ideal world from which me makes inductions. Rather than proving statements deductively (like in most of mathematics), we will use our observations to make inductions about our ideal unobservable world. 
 
@@ -239,7 +288,7 @@ An estimator is **unbiased** if its expectation equals the parameter (for all $n
 $$\bar{X_n} = \frac{1}{n} \sum_{i=1}^n X_i$$$$s^2 = \frac{1}{n-1} \sum_{i=1}^n(X_i - \bar{X})^2$$
 Note: Why should the unbiased estimator of $\sigma^2$ contain a $n-1$ term? Simplify because this is the estimator that ensures that $E[s^2] =\sigma^2$. If this mathematical result seems surprising, consider that $s^2$ depends on the statistic $\bar{X}$ which will be close, but probably not equal to $\mu$. As such, our sample variance $s^2$ is smaller than what it would be if it were calculated using the real (but unknown) average $\mu$. This means $s^2$ systematically underestimates the real $\sigma^2$ if it weren't for the $n-1$ correction. In other words, the use of $\bar X$ instead of $\mu$ causes $s^2$ to overfit our data and the $n-1$ term corrects for this overfitting.
 
-**Glivenko-Cantelli theorem** says that an empirical cdf $\hat{F}_n(x)$ based on a sample $X_1, \ldots, X_n$ converges on the unobservable distribution $F$. $$\text{sup}_{x\in \mathbb{R}} |\hat F_n(x)-F(x)| \to_p 0$$
+**Glivenko-Cantelli theorem** says that an empirical cdf $\hat{F}_n(x)$ based on a sample $X_1, \ldots, X_n$ converges on the unobservable distribution $F$. $$\text{sup}_{x\in \mathbb{R}} |\hat F_n(x)-F(x)| \stackrel{p}{\to} 0$$
 There are 4 techniques to find the distribution of a statistic:
 1. Analytically - exact but hard for most distributions
 2. Monte carlo (by simulation) - only works if you know the unobservable distribution
@@ -276,9 +325,9 @@ Sometimes there is no unbiased estimator (see notes for proof). In these cases, 
 
 **Bias-variance tradeoff** is the notion that there's always a more efficient (lower MSE) estimator than the unbiased one (proof in notes).
 
-**Consistency** is the concept that an estimator $\hat \theta_n$ is unbiased as $n \to \infty$. Formally: $\hat\theta_n \to_p \theta$.
+**Consistency** is the concept that an estimator $\hat \theta_n$ is unbiased as $n \to \infty$. Formally: $\hat\theta_n \stackrel{p}{\to} \theta$.
 
-An estimator $\hat\theta$ is **asymptotically normal** if $r_n(\hat\theta - a_n) \Rightarrow N(0,\sigma^2)$. Typically, $r_n=\sqrt{n}$ and $a_n = \theta$.
+An estimator $\hat\theta$ is **asymptotically normal** if $r_n(\hat\theta - a_n) \stackrel{d}{\to} N(0,\sigma^2)$. Typically, $r_n=\sqrt{n}$ and $a_n = \theta$.
 
 Beyond the plug in estimator (aka. method of analogy) and the **method of moments** (see notes), one can generate the **maximum likelihood estimator**: the estimator that maximizes the likelihood of observing $X$ if $\theta$ were equal to the estimator. This MLE estimator can be found by solving the first order conditions of the likelihood function $L$ (or the log of the likelihood function, aka. log-likelihood $l$). The likelihood function is simply the joint probability distribution.
 
