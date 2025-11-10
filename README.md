@@ -10,6 +10,7 @@
 
 - [ ] Code highlighting
 - [ ] Table of contents
+- [ ] Migrate to https://github.com/11ty/eleventy-base-blog
 
 ## Acknowledgments
 
