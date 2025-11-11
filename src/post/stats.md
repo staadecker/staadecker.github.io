@@ -45,7 +45,7 @@ For example, frequentist statistics (the focus of this course) adopts of philoso
 	
 	Freedman, D. Some issues in the foundation of statistics. Found Sci 1, 19–39 (1995). https://doi.org/10.1007/BF00208723
 
-With that said, Part 1 covers the foundations in probability that will allow us to do statistics in Part 2 and 3.
+We're now ready to dive into probability, the mathematical framework that will underpin the statistics discussed in Parts 2 and 3.
 
 #### :x Probability Space and the Formal Definition of Probability
 
@@ -65,6 +65,8 @@ A **random variable** is a mathematical object *dependent on random events*. Exa
 - A random variable representing the temperature tomorrow.
 
 Importantly, random variables have a probability distribution. $X \sim F_x$ indicates that $X$ is a random variable with cumulative probability distribution (cdf) $F_x(t) = P \{X \leq t\}$. Key tools to work with random variables include the [:probability density function](#x-def-pdf) (pdf) $f_X(t)$, the [:expected value function](#x-def-expected-value) $E[X]$, [:variance](#x-variance) $V(X)$, [:moments](#x-moments), and [:important properties](#x-properties-of-random-variables) of these abstractions.
+
+Common probability distributions include the [:binomial distribution](#x-binomial-distribution), [:poisson distribution](#x-poisson-distribution), [:uniform distribution](#x-uniform-distribution), and [:normal distribution](#x-normal-distribution).
 
 #### :x Def. pdf
 
@@ -107,6 +109,52 @@ An often used property is:
 $$Var(X) =E[X^2] - E[X]^2$$
 
 Note that when $X$ has mean 0, $Var(X) = E[X^2]$.
+
+#### :x Binomial distribution
+
+A binomial distribution models the number of successes $X$ in $n$ independent "coin tosses" with success probability $p$.
+
+$$P\{X=x\} = \frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}$$
+
+It has mean $\mu = np$, variance $\sigma^2 = np(1-p)$.
+
+When $n=1$, the binomial distribution is called a Bernoulli distribution. This is simply a coin toss:
+
+$$P\{X=1\} = p, \quad P\{X=0\} = 1-p$$
+
+#### :x Poisson distribution
+
+If the average rate of events is $\lambda$ per interval (e.g. 1000 customers per year) and events occur independently, then the probability of observing $x$ events in one interval is given by the Poisson distribution:
+
+$$P\{X=x\} = \frac{\lambda^x e^{-\lambda}}{x!}$$
+
+Its mean and variance equal $\lambda$ and the minimum sufficient statistic for $\lambda$ is $\sum_{i=1}^n X_i$.
+
+Related to the Poisson distribution is the Gamma distribution which models the waiting time for the $k$-th event to occur:
+
+$$f_X(x) = \frac{\lambda^k x^{k-1} e^{-\lambda x}}{(k-1)!}$$
+
+When we're only interested in the waiting time for the first event ($k=1$), the Gamma distribution simplifies to the exponential distribution:
+
+$$f_X(x) = \lambda e^{-\lambda x}$$
+
+#### :x Uniform distribution
+
+A uniform distribution on the interval $[a,b]$ is one where all values between $a$ and $b$ are equally likely,
+
+$$f_X(x) = \frac{1}{b-a} \quad \text{for } a \leq x \leq b$$
+
+It has mean $\mu = \frac{a+b}{2}$ and variance $\sigma^2 = \frac{(b-a)^2}{12}$.
+
+#### :x Normal distribution
+
+Normal distributions arise from the central limit theorem and are thus ubiquitous in statistics. A normal distribution with mean $\mu$ and variance $\sigma^2$ has pdf:
+
+$$f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp{\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)}$$
+
+If $X$ is a vector of $n$ normal random variables with mean vector $\mu$ and covariance matrix $\Sigma$, then $X$ has a multivariate normal distribution with pdf:
+
+$$f_X(x) = \frac{\exp\left(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)}{(2\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}$$
 
 ### Joint distributions
 Two random variables could be correlated. For example, $X_t$ and $X_{t+1}$ in a sequence of random events. Or $X$ and $Y$ being characteristics of a person being drawn from a population (e.g. income and education). Or the daily returns of stock $A$ and $B$. Key definitions including the [:joint cumulative distribution](#x-joint-cumulative-distribution), [:marginal distribution](#x-marginal-distribution), [:conditional distributions](#x-conditional-distribution), [:law of iterated expectations](#x-lie), [:covariance](#x-covariance), and [:properties of independent variables](#x-independent-properties).
@@ -183,35 +231,6 @@ If and only if $X$ and $Y$ are independent, the following properties are true:
 
 - $V(X + Y + Z + \ldots) = V(X)+V(Y)+V(Z)+\ldots$
 
-### Common distributions
-
-Familiarity with the following distributions is helpful.
-
-<div class="wide">
-<div style="min-width:800px">
-
-| | Poisson | Binomial | Normal | Multivariate normal | $\chi_k^2$ |
-| --- | --- | --- | --- | --- | --- |
-| Parameters | $\lambda$ | $(n,p)$ | $(\mu,\sigma^2)$ | $(\mu,\Sigma)\in(\mathbb{R}^n,\mathbb{R}^{n\times n})$ | $k$ |
-| PDF / PMF | $\frac{\lambda^xe^{-\lambda}}{x!}$ | $\frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}$ | $\frac{1}{\sqrt{2\pi\sigma^2}}\exp{\frac{-(x-\mu)^2}{2\sigma^2}}$ | $\frac{\exp(-(x-\mu)^T\Sigma^{-1}(x-\mu)/2)}{(2\pi)^{n/2}\sqrt{\text{det}(\Sigma)}}$ | |
-| Mean | $\lambda$ | $np$ | $\mu$ | $\mu$ | $k$ |
-| Variance | $\lambda$ | $np(1-p)$ | $\sigma^2$ | $\Sigma$ | $2k$ |
-| Minimum sufficient<br/>statistic for n iid | $\Sigma X_i$ | $X$ | $\bar X \to \mu$ | | |
-| Notes | | "Bernoulli" when $n=1$. | | | |
-</div>
-</div>
-
-#### :x Bernoulli distribution
-
-#### :x Poisson distribution
-
-#### :x Uniform distribution
-
-#### :x Normal distribution
-
-#### :x Multi-variate normal distribution
-TODO
-
 
 ### Limits, convergence, and asymptotics
 
@@ -237,7 +256,7 @@ But how fast does an average converge? The **central limit theorem** says that t
 
 $$\sqrt{n}(\bar{X_n}-\mu_X) \stackrel{d}{\to} N(0,\sigma^2)$$
 
-A convenient way to deal with _rates_ of convergence is using **O-notation**. We write $X_n \in o(b_n)$ if $X_n$ grows slower than $b_n$ and $X_n \in O(b_n)$ if $X_n$ grows slower or just as fast (but no faster) than $b_n$. For example, the CLT implies $\bar X_n \in O(n^{-1/2})=o_p(1)$. Using o-notation and [:its properties and formal definitions](#x-o-notation) we can more easily make arguments about rates of convergence.
+A convenient way to deal with _rates_ of convergence is using **O-notation**. We write $X_n \in o(b_n)$ if the spread of $X_n$ shrinks faster than $b_n$ and $X_n \in O(b_n)$ if the spread of $X_n$ shrinks at the same speed (or faster) than $b_n$. For example, the CLT implies than the variance of an average shrinks at speed $1/\sqrt{n}$, so $\bar X_n \in O(n^{-1/2})$. We could also write $o_p(1)$ to simply denote that the variance of an average approaches zero. Using o-notation and [:its properties and formal definitions](#x-o-notation) we can more easily make arguments about rates of convergence.
 
 What about the properties of _functions of random variables_? The **continuous mapping theorem** (CMT) says that if $X_n$ converges to $X$ in probability/distribution, then $g(X_n)$ converges to $g(X)$ in probability/distribution.
 
@@ -245,11 +264,29 @@ Moreover, the **delta method** calculates the rate of convergence $g(X)$ given t
 
 The **Slutsky theorem** says that sum or product of two variables that converge in probability also converges in probability (if, $X_n\stackrel{p}{\to} X$ and $Y_n \stackrel{p}{\to} Y$, then $X_n + Y_n\stackrel{p}{\to} X+Y$ and $X_nY_n \stackrel{p}{\to} XY$). While this is not true for two variables that converge in distribution, we can say that if $X_n\stackrel{d}{\to} X$ and $Y_n \stackrel{p}{\to} c$, then $X_n + Y_n\stackrel{d}{\to} X+c$ and $X_nY_n \stackrel{d}{\to} cX$.
 
-Finally the following theorems are also helpful:
+Finally the following inequalities are useful in setting bounds on tail events: [:Chebyskev's inequality](#x-chebyskevs-inequality), [:Markov's theorem](#x-markovs-theorem),and [:Hölder's inequality](#x-holders-inequality).
 
-- Markov's theorem caps the probability of tail events for a *non-negative* random variable $X$: $P\{X\geq t\}\leq E[X]/t$.
-- Chebyskev's inequality caps the probability of tail events for any random variable: $P\{|X-\mu| \geq t\} \leq Var(X) / t^2$
-- [Holders inequality](https://en.wikipedia.org/wiki/H%C3%B6lder%27s_inequality)
+#### :x Chebyskev's inequality
+
+Chebyskev's inequality caps the probability of tail events. For any random variable $X$,
+
+$$P\{|X-\mu| \geq t\} \leq \frac{Var(X)}{t^2}$$
+
+#### :x Markov's theorem
+
+Like [:Chebyskev's inequality](#x-chebyskevs-inequality), Markov's theorem sets an upper bound on the probability of tail events, but the theorem is specific to *non-negative* random variables only. For non-negative random variable $X$,
+
+$$P\{X\geq t\}\leq \frac{E[X]}{t}$$
+
+#### :x Holder's inequality
+
+For all $p,q>1$ such that $\frac{1}{p}+\frac{1}{q}=1$,
+
+$$E[|XY|] \leq E[|X|^p]^{\frac{1}{p}}E[|Y|^q]^{\frac{1}{q}}$$
+
+Note that the Cauchy-Schwarz inequality is the special case where $p=q=2$,
+
+$$E[XY]^2 \leq E[X^2]E[Y^2]$$
 
 #### :x Delta-epsilon formalization
 
