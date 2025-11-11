@@ -17,7 +17,7 @@ Clicking on an expandable box like you just did will reveal additional details t
 
 ## Course overview
 This course covers the mathematical foundations in statistics needed for doing PhD-level economics and econometrics. It is organized as follows:
-1. [Part 1](#part-1-probability-distributions-random-variables-and-asymptotic-properties) covers the foundations of statistics, namely random variables and tools to analyze their behaviors as $n \to \infty$, including the delta method, the central limit theorem and O-notation. These tools will be useful to estimate our statistics for large sample sizes.
+1. [Part 1](#part-1-probability) covers the foundations of statistics, namely random variables and tools to analyze their behaviors as $n \to \infty$, including the delta method, the central limit theorem and O-notation. These tools will be useful to estimate our statistics for large sample sizes.
 2. [Part 2](#part-2-statistics) covers statistics and estimators, particularly what makes a "good" estimator and how to estimate "goodness" through tools like the Rao-Cramer bound and Fisher information.
 3. [Part 3](#part-3-statistical-tests) covers statistical tests.
 
@@ -25,19 +25,30 @@ Familiarity with calculus, matrix algebra and other math concepts like the [:tay
 
 #### :x Taylor Series
 
-We will often approximate $f(x) - f(a)$ using the [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series):
+We will often approximate $f(x) - f(a)$ using the [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) expansion:
 
 $$f(x)-f(a)=\frac{f'(a)}{1!}(x-a)+\frac{f''(a)}{2!}(x-a)^2+\ldots$$
 
 When a finite number of terms are used, the approximation is most accurate near $a$.
 
-## Part 1: Probability distributions, random variables, and asymptotic properties
+## Part 1: Probability
 
-What is probability?
+It is often said that probability is the inverse of statistics [^1]. While statistics is about making inferences about the world given observations, probability is about making claims as to what me will observe given a predefined world. Statistics is inductive. Probability is deductive. Statistics is backward looking. Probability is forward looking.
 
-Formally, **probability** is a field of mathematics built upon [:a few axioms](#x-probability-space-and-the-formal-definition-of-probability). The interpretation of these axioms and their meaning in the real-world is a contested topic of philosophy (see [What is The Chance of An Earthquake](https://statistics.berkeley.edu/sites/default/files/tech-reports/611.pdf)), but for our purposes, probability begins with the concept of a random variable.
+[^1]: See for example this [StackExchange answer](https://stats.stackexchange.com/a/675).
+
+Although technically correct, I don't find this definition particularly helpful. Rather, I like to think of probability as the field of pure mathematics that serves as the foundation of statistics, a field of applied mathematics. Probability tells you what to expect given a fully-defined mathematical problem. Statistics suggests how one can convert the real world into such a problem and meaningfully interpret the problem's results. Probability is entirely built upon a [:set of mathematical axioms](#x-probability-space-and-the-formal-definition-of-probability). Statistics is built on probability with an added sprinkle of _philosophy_.
+
+For example, frequentist statistics (the focus of this course) adopts of philosophical framework reminiscent of Plato's cave. It assumes that there exists a real world containing the truth we wish to find, but we cannot see this real world. Rather, we only get to observe samples drawn randomly from this real world from which we are to make inductions about the real world (aided by tools from probability). Bayesian statistics is another approach to statistics grounded in a different philosophy. In general, the application of probability to the real world is a contested and fascinating area of philosophy [^2].
+
+[^2]: For example, see this [cheeky paper](https://statistics.berkeley.edu/sites/default/files/tech-reports/611.pdf) or, for those with access, read: 
+	
+	Freedman, D. Some issues in the foundation of statistics. Found Sci 1, 19–39 (1995). https://doi.org/10.1007/BF00208723
+
+With that said, Part 1 covers the foundations in probability that will allow us to do statistics in Part 2 and 3.
 
 #### :x Probability Space and the Formal Definition of Probability
+
 The formal definition of probability is based on measure theory. Measure theory helps tie seemingly different mathematical concepts together including magnitude, mass, probability, and geometrical measures like length, area, volume. TODO
 
 The philosophy of frequentist statistics is that there exists an ideal world with potential outcomes $\Omega$. Every experiment produces a realization $\omega \in \Omega$. Here $w$ need not be a number; $\omega$ could be the description "the first die rolled a 5 and the second rolled a 4". Random variables are functions that map these realizations $w$ to the space of real numbers $\mathbb{R}$. Importantly, a random variable also has an associated cumulative probability distribution $F_X(t): \mathbb{R} \to [0,1]$. This cdf requires a probability measure $Pr$, a function that maps sets to the probability of observing that set. While it might be tempting to say $Pr: \Omega \to [0,1]$, it is technically more accurate to define an intermediate set $\mathcal{F}$ which constitutes all possible measurable subsets of $w$ as this richer space $F$ allows for a more interesting $Pr: \mathcal{F} \to [0,1]$. Summarizing:
@@ -131,11 +142,8 @@ $$\text{cov}(X,Y) = E[(X-E[X])(Y-E[Y])]$$
 
 Two useful properties are:
 
-$$Var(X+Y)=Var(X)+Var(Y)+2\text{cov}(X,Y)$$
-
-and
-
-$$\text{cov}(X,Y) = E[XY] - E[X]E[Y]$$
+1. $Var(X+Y)=Var(X)+Var(Y)+2\text{cov}(X,Y)$
+2. $\text{cov}(X,Y) = E[XY] - E[X]E[Y]$
 
 Notice that if $X$ or $Y$ have mean $0$,
 
@@ -145,10 +153,25 @@ Covariance can be normalized to produce the following useful metric.
 
 $$corr(X,Y) = \frac{cov(X,Y)}{\sqrt{V(X)V(Y)}}$$
 
-where 
+where by definition 
 
 $$-1 \leq corr(X,Y) \leq 1$$
 
+[:Proof](#x-corr-proof)
+
+##### :x Corr Proof
+
+Let $A = X - E[X]$ and $B = Y - E[Y]$. From Holder's inequality we know:
+
+$$E[AB]^2 \leq E[A^2]E[B^2]$$
+
+Substituting in our definitions for $A$ and $B$ we find:
+
+$$cov(X,Y)^2 \leq V(X) V(Y)$$
+
+Therefore, by rearranging,
+
+$$\frac{|cov(X,Y)|}{\sqrt{V(X) V(Y)}} \leq 1$$
 
 #### :x Independent properties
 
