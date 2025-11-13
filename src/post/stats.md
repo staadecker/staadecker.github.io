@@ -5,6 +5,20 @@ title: "What I learnt in MIT's 14.380 \"Statistics for Economics\" course"
 
 # {{ title }}
 
+Perhaps my favorite part of grad school is being surrounded by curious friends with whom I can discuss and ponder how different worlds might look.
+
+One brewing set of ideas revolves around how we communicate technical concepts. Part of the challenge with communication is that often we fail to tailor our writing or speech to our audience. At times, we unknowingly reference concepts that are unfamiliar to our audience. Other times, we laboriously explain concepts that our audience already knowns. Skilled writers avoid these mistakes yet only to the extent that one can speak of "an audience." What happens when the target audience is a diverse group with varying backgrounds? To what extent can one piece of writing meet the needs of many?
+
+Today, communication is mainly mediated by the .pdf file type, at least within academia, government, and the legal profession. Every journal publication, thesis, and government agency report must be fully representable within a PDF file which often imposes constraints. For example, archive PDFs cannot contain executable code. How would communication change if this weren't the case?
+
+_The Billion Dollar Code_ is a Netflix miniseries about a patent fight over Google Earth whose origins date back to the 1990s. Beside satisfying my cravings for legal dramas, it portrays an optimism for technology that seems to have been lost. The protagonists who demo a Google Earth precursor at a 1994 Kyoto conference are a hacker and an art student obsessed with building the perfect human-computer interface—one that intuitively lets participants explore our planet from the sky. Thirty years later, how close are we to their vision of the computer as a medium that enriches human experiences?
+
+<!-- https://artcom.de/en/?project=terravision -->
+
+I am far from the only one to have pondered such questions. In 2022, the admirable creator Nicky Case created [Nutshell](https://ncase.me/nutshell/) a software package for authors to embed expandable boxes in their websites. Like footnotes, these boxes can hide additional details that not all readers might care about, yet, unlike footnotes, boxes can contain other boxes allowing for _multiple layers of hidden explanations_. The main text can be tailored for the general reader, a first layer of hidden explanations can be provided for the curious, and additional layers of hidden explanations can satisfy the academics.
+
+Nutshell is inspired from Telescopic Text, a 2008 viral website where the sentence "I made tea." can be expanded into a paragraph long story. The idea of stretching text dates back to at least 1967 when it was proposed by computer pioneer Ted Nelson. He finally published a version of his vision in 2014.
+
 I think it's a shame how ineffective our post-secondary education system is at ensuring the long-term retention of knowledge. What I learn in class tends to be erased the moment I leave the final exam room. But not today!
 
 In a naive effort to remember what I learnt in my most recent half-semester course at MIT ("14.380: Statistics for Economics"), and because I found the course content quite interesting, I have typed up a version of my class notes that I think should be accessible to a general audience (and my future forgetful self).
