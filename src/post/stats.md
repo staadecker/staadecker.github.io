@@ -1,29 +1,11 @@
 ---
 layout: base.liquid
-title: "What I learnt in MIT's 14.380 \"Statistics for Economics\" course"
+title: "Class notes from MIT's 14.380 \"Statistics for Economics\" course"
 ---
 
 # {{ title }}
 
-Perhaps my favorite part of grad school is being surrounded by curious friends with whom I can discuss and ponder how different worlds might look.
-
-One brewing set of ideas revolves around how we communicate technical concepts. Part of the challenge with communication is that we often struggle to tailor our writing or speech to our audience. We might unknowingly reference concepts that are unfamiliar to our audience or, conversely, we might laboriously explain concepts that our audience already knowns. Skilled writers avoid these mistakes yet only to the extent that one can speak of "an audience." What happens when the target audience is a diverse group with varying backgrounds? To what extent can one piece of writing meet the needs of many?
-
-Here's a different thought. Communication today is mainly mediated by the .pdf file type, at least within academia, government, and the legal profession. Every journal publication, thesis, and government agency report must be fully representable within a PDF file which often imposes constraints. For example, archive PDFs cannot contain executable code and thus truly interactive elements. How would communication change if our medium of communication were more flexible?
-
-And a final thought: _The Billion Dollar Code_ is a Netflix miniseries about a patent fight over Google Earth whose origins date back to the 1990s. Beside satisfying my cravings for legal dramas, it portrays an optimism for technology that seems to have been lost. The protagonists who demo a precursor of Google Earth at a conference in 1994 are a German hacker and art student, obsessed with building the perfect human-computer interface—one that intuitively lets participants explore our planet from the sky. Thirty years later, how close are we to their vision of the computer as _a medium_ that enriches human experiences?
-
-<!-- https://artcom.de/en/?project=terravision -->
-
-I am far from the only one to have pondered such questions. In 2022, the admirable creator Nicky Case created [Nutshell](https://ncase.me/nutshell/) a software package for authors to embed expandable boxes in their websites. Like footnotes, these boxes can hide additional details that not all readers might care about, yet, unlike footnotes, boxes can contain other boxes allowing for _multiple layers of hidden explanations_. (This concept is not new. Nutshell was inspired from Telescopic Text, a website that went viral in 2008 where the sentence "I made tea." could be expanded into a paragraph-long story. Stretching text dates back to at least 1967 when it was proposed by computer pioneer Ted Nelson who finally published a demo of his vision in 2014, 47 years later.)
-
-In theory, these expanding "nutshells" could help make knowledge accessible to different audiences. One can imagine an article tailed to a general audience containing a first layer of hidden explanations for the curious and additional layers of hidden explanations for those academics wanting to verify or reproduce the article's claims.
-
-I decide to experiment with Nicky Cases' Nutshell's by writing up my class notes for a statistics course I took this semester at MIT. Although _14.380 Statistics for Economics_ was a PhD-level course, I have used Nutshells to make the main article accessible to an undergraduate audience, hiding the math-y details inside nutshells. If you're curious what is taught at MIT, head over to the [notes' website here]().
-
-I'm quite pleased with the result. The Nutshells not only make the article more accessible, they also helped structure my learning of the course materials by, for example, hiding the proof of theorem's to make studying easier. Unfortunately, I don't expect us to see Nutshells gain in popularity, in part because we don't have the right incentive structures to encourage the development and maintenance of such tools. In fact, I had to make three fixes to the tool in order to get in working properly.
-
-Finally, a big shout out goes to Prof. Anna Mikusheva whose teaching of this course was excellent. A more comprehensive and traditional version of the course content is freely [available](https://ocw.mit.edu/courses/14-381-statistical-method-in-economics-fall-2018/pages/syllabus/) on MIT OpenCourseWare.
+These are my class notes for the MIT course _14.380 Statistics for Economics_ that I took in Fall 2025. I wrote up these notes to experiment with the tool [Nutshell](https://ncase.me/nutshell/). [This blog post](TODO) provides more context on the experiment. In short, I've used expandable boxes [:like this](#x-nutshells) throughout the text to make my notes accessible to different audiences and easier to navigate.
 
 #### :x Nutshells
 
@@ -53,7 +35,7 @@ It is often said that probability is the inverse of statistics [^1]. While stati
 
 Although technically correct, I don't find this definition particularly helpful. Rather, I like to think of probability as the field of pure mathematics that serves as the foundation of statistics, a field of applied mathematics. Probability tells you what to expect given a fully-defined mathematical problem. Statistics suggests how one can convert the real world into such a problem and meaningfully interpret the problem's results. Probability is entirely built upon a [:set of mathematical axioms](#x-probability-space-and-the-formal-definition-of-probability). Statistics is built on probability with an added sprinkle of _philosophy_.
 
-For example, frequentist statistics (the focus of this course) adopts of philosophical framework reminiscent of Plato's cave. It assumes that there exists a real world containing the truth we wish to find, but we cannot see this real world. Rather, we only get to observe samples drawn randomly from this real world from which we are to make inductions about the real world (aided by tools from probability). Bayesian statistics is another approach to statistics grounded in a different philosophy. In general, the application of probability to the real world is a contested and fascinating area of philosophy [^2].
+For example, frequentist statistics (the focus of this course) adopts of philosophical framework reminiscent of Plato's cave. It assumes that there exists a real world containing the truth we wish to find, but we cannot directly observe this real world. Rather, we only get to observe samples drawn randomly from this real world from which we are to make inductions about the real world (aided by tools from probability). Bayesian statistics is another approach to statistics grounded in a different philosophy. In general, the application of probability to the real world is a contested and fascinating area of philosophy [^2].
 
 [^2]: For example, see this [cheeky paper](https://statistics.berkeley.edu/sites/default/files/tech-reports/611.pdf) or, for those with access, read: 
 	
@@ -73,14 +55,14 @@ The philosophy of frequentist statistics is that there exists an ideal world wit
 
 ### Random variables
 
-A **random variable** is a mathematical object *dependent on random events*. Examples include:
-- A random variable representing the result of a coin toss (range: $\{H, T\}$).
+A **random variable** (r.v.) is a mathematical object *dependent on random events*. Examples include:
+- A random variable representing the result of a coin toss ($1$ for heads, $0$ for tails).
 - A random variable representing the average height of the next 10 people you see.
 - A random variable representing the temperature tomorrow.
 
 Importantly, random variables have a probability distribution. $X \sim F_x$ indicates that $X$ is a random variable with cumulative probability distribution (cdf) $F_x(t) = P \{X \leq t\}$. Key tools to work with random variables include the [:probability density function](#x-def-pdf) (pdf) $f_X(t)$, the [:expected value function](#x-def-expected-value) $E[X]$, [:variance](#x-variance) $V(X)$, [:moments](#x-moments), and [:important properties](#x-properties-of-random-variables) of these abstractions.
 
-Common probability distributions include the [:binomial distribution](#x-binomial-distribution), [:poisson distribution](#x-poisson-distribution), [:uniform distribution](#x-uniform-distribution), and [:normal distribution](#x-normal-distribution).
+Common probability distributions include the [:binomial distribution](#x-binomial-distribution), [:poisson and gamma distribution](#x-poisson-distribution), [:uniform distribution](#x-uniform-distribution), and [:normal distribution](#x-normal-distribution).
 
 #### :x Def. pdf
 
@@ -116,7 +98,7 @@ The mean and variance are special cases of moments: mathematical objects that he
 	- $E[X+Y] = E[X] + E[Y]$
 	- $E[aX] = aE[X]$
 - Variance is not
-	- $Var(X+Y) \neq Var(X) + Var(Y)$
+	- $Var(X+Y) \neq Var(X) + Var(Y)$ (in all cases)
 	- $Var(X+a)=Var(X)$ (shift agnostic)
 	- $Var(aX)=a^2Var(X)$
 An often used property is:
@@ -248,7 +230,7 @@ If and only if $X$ and $Y$ are independent, the following properties are true:
 
 ### Limits, convergence, and asymptotics
 
-Later in the course, we will want to make approximations for large sample sizes. For example, we might want to argue that some random variable of our current sample $X_n$ is actually well approximated by the random variable for a theoretically infinite sample $X_\infty$, when $n$ is large. Such arguments can simply our statistics since often $X_\infty$ is a simpler expression to work with than $X_n$.
+Later in the course, we will want to make approximations for large sample sizes. For example, we might want to argue that some random variable of our current sample $X_n$ is actually well approximated by the random variable $X$ when $n$ is large. Such arguments can simplify our statistics since often $X$ is a simpler expression to work with than $X_n$.
 
 To make such arguments, we must introduce mathematical tools to deal with _asymptotics_—the behavior of random variables as $n$ approaches infinity (denoted $n \to \infty$).
 
