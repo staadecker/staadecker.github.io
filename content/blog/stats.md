@@ -1,9 +1,10 @@
 ---
-layout: base.liquid
 title: "Class notes from MIT's 14.380 \"Statistics for Economics\" course"
+description: Post carefully explaining statistical concepts from class. 
+date: 2025-11-22
+tags: communication
+draft: false
 ---
-
-# {{ title }}
 
 These are my class notes for the MIT course _14.380 Statistics for Economics_ that I took in Fall 2025. I wrote up these notes to experiment with the tool [Nutshell](https://ncase.me/nutshell/). [This blog post](TODO) provides more context on the experiment. In short, I've used expandable boxes [:like this](#x-nutshells) throughout the text to make my notes accessible to different audiences and easier to navigate.
 
@@ -29,13 +30,13 @@ When a finite number of terms are used, the approximation is most accurate near 
 
 ## Part 1: Probability
 
-It is often said that probability is the inverse of statistics [^1]. While statistics is about making inferences about the world given observations, probability is about making claims as to what me will observe given a predefined world. Statistics is inductive. Probability is deductive. Statistics is backward looking. Probability is forward looking.
+It is often said that probability is the inverse of statistics[^1]. While statistics is about making inferences about the world given observations, probability is about making claims as to what me will observe given a predefined world. Statistics is inductive. Probability is deductive. Statistics is backward looking. Probability is forward looking.
 
 [^1]: See for example this [StackExchange answer](https://stats.stackexchange.com/a/675).
 
 Although technically correct, I don't find this definition particularly helpful. Rather, I like to think of probability as the field of pure mathematics that serves as the foundation of statistics, a field of applied mathematics. Probability tells you what to expect given a fully-defined mathematical problem. Statistics suggests how one can convert the real world into such a problem and meaningfully interpret the problem's results. Probability is entirely built upon a [:set of mathematical axioms](#x-probability-space-and-the-formal-definition-of-probability). Statistics is built on probability with an added sprinkle of _philosophy_.
 
-For example, frequentist statistics (the focus of this course) adopts of philosophical framework reminiscent of Plato's cave. It assumes that there exists a real world containing the truth we wish to find, but we cannot directly observe this real world. Rather, we only get to observe samples drawn randomly from this real world from which we are to make inductions about the real world (aided by tools from probability). Bayesian statistics is another approach to statistics grounded in a different philosophy. In general, the application of probability to the real world is a contested and fascinating area of philosophy [^2].
+For example, frequentist statistics (the focus of this course) adopts of philosophical framework reminiscent of Plato's cave. It assumes that there exists a real world containing the truth we wish to find, but we cannot directly observe this real world. Rather, we only get to observe samples drawn randomly from this real world from which we are to make inductions about the real world (aided by tools from probability). Bayesian statistics is another approach to statistics grounded in a different philosophy. In general, the application of probability to the real world is a contested and fascinating area of philosophy[^2].
 
 [^2]: For example, see this [cheeky paper](https://statistics.berkeley.edu/sites/default/files/tech-reports/611.pdf) or, for those with access, read: 
 	
@@ -238,29 +239,38 @@ You may be familiar with limits and their [:delta-epsilon formalization](#x-delt
 
 Specifically, there are two notable ways in which a random variable $X_n$ can be said to converge onto a different random variable $Y$. 
 
-**Convergence in distribution** (denoted $X_n \stackrel{d}{\to}Y$) occurs when the probability distribution of $X_n$ approaches that of $Y$ (the CDFs "line up"). Distribution-wise $X_n$ and $Y$ are identical in the limit. However, the _outcomes_ of a draw of $X_n$ and $Y$ need not be identical. For example, say you have two magic coins that always land on opposite faces. When you toss them simultaneously one always lands head and the other tail. The distribution of both coins are equal (50% heads, 50% tails) but their realizations are not.
+1. **Convergence in distribution** (denoted $X_n \stackrel{d}{\to}Y$) occurs when the probability distribution of $X_n$ approaches that of $Y$ (the CDFs "line up"). Distribution-wise $X_n$ and $Y$ are identical in the limit. However, the _outcomes_ of a draw of $X_n$ and $Y$ need not be identical. For example, say you have two magic coins that always land on opposite faces. (When you toss them simultaneously one always lands head and the other tail.) The distribution of both coins are equal (50% heads, 50% tails) but their realizations are not.
 
-**Convergence in probability** (denoted $X_n \stackrel{p}{\to}Y$) is this stronger idea that not only do the distributions of $X_n$ and $Y$ match in the limit, but also the _realizations_ of any individual draw match (in the limit). Note that talking about convergence in probability only ever makes sense when comparing two random variables resulting from the same draw (from the same "probability space"). (If the magic coins don't come from the same toss, you can't talk about their outcomes matching.)
+2. **Convergence in probability** (denoted $X_n \stackrel{p}{\to}Y$) is the stronger idea that not only do the distributions of $X_n$ and $Y$ match in the limit, but also the _realizations_ of any individual draws match (in the limit). Of course, for this concept to make any sense, $X_n$ and $Y$ must come from the same draw (i.e. the same "probability space"). (If the magic coins can be tossed separately you cannot compare their outcomes, only their distributions.)
 
-Both types of convergence have [:formal definitions](#x-definitions-of-convergence) that are useful to know and convergence in probability implies convergence in distribution.
+Both types of convergence have [:formal definitions and properties](#x-definitions-of-convergence) that are useful to know (e.g. convergence in probability implies convergence in distribution).
 
-Now some useful mathematical tools.
+Now that we are equipped to discuss asymptotic behaviors we can introduce several useful tools:
 
-First the **law of large numbers** (LLN) states that the average of $n$ independent and identically distributed (iid) random variables converges in probability to their expected value: $\bar{X_n} \stackrel{p}{\to} E[X_i]$.
+- The **law of large numbers** (LLN) states that the average of $n$ independent and identically distributed (iid) random variables converges in probability to their expected value: $\bar{X_n} \stackrel{p}{\to} E[X_i]$.
 
-But how fast does an average converge? The **central limit theorem** says that the variance of an average shrinks at rate $\frac{1}{\sqrt{n}}$. You can think of this as saying $\bar{X_n} \stackrel{d}{\to}N(E[X_i], \frac{\sigma^2}{n})$ although technically we cannot converge onto a distribution that itself is changing with $n$ and must instead write the CTL as:
+- But how fast does an average converge? The **central limit theorem** says that the variance of an average shrinks at rate $\frac{1}{\sqrt{n}}$. You can think of this as saying $\bar{X_n} \stackrel{d}{\to}N(E[X_i], \frac{\sigma^2}{n})$ although technically we cannot converge onto a distribution that itself is changing with $n$ and must instead write the CTL as:
 
 $$\sqrt{n}(\bar{X_n}-\mu_X) \stackrel{d}{\to} N(0,\sigma^2)$$
 
-A convenient way to deal with _rates_ of convergence is using **O-notation**. We write $X_n \in o(b_n)$ if the spread of $X_n$ shrinks faster than $b_n$ and $X_n \in O(b_n)$ if the spread of $X_n$ shrinks at the same speed (or faster) than $b_n$. For example, the CLT implies than the variance of an average shrinks at speed $1/\sqrt{n}$, so $\bar X_n \in O(n^{-1/2})$. We could also write $o_p(1)$ to simply denote that the variance of an average approaches zero. Using o-notation and [:its properties and formal definitions](#x-o-notation) we can more easily make arguments about rates of convergence.
+- [:**O-notation**](#x-o-notation) helps us make arguments about _rates_ of convergence.
 
-What about the properties of _functions of random variables_? The **continuous mapping theorem** (CMT) says that if $X_n$ converges to $X$ in probability/distribution, then $g(X_n)$ converges to $g(X)$ in probability/distribution.
+- The [:**Continuous Mapping Theorem**](#x-cmt) (CMT), [:**Delta Method**](#x-delta-method), and [:**Slutsky Theorem**](#x-slutsky-theorem) help derive the asymptotic behaviors of functions of random variables (e.g. $g(X)\to ?$ or $X+Y \to?$)
 
-Moreover, the **delta method** calculates the rate of convergence $g(X)$ given that of $X$. If $\sqrt{n}(X_n-\mu)\stackrel{d}{\to} N(0,\sigma^2)$ and $g'(\mu) \neq 0$, then $\sqrt{n}(g(X_n) - g(\mu)) \stackrel{d}{\to} N(0, \sigma^2 g'(\mu)^2)$. It's multivariate extension is, if $\sqrt{n}(\vec{X_n}-\vec{\mu})\stackrel{d}{\to} N(0,\Sigma)$ and $g: \mathbb{R}^k \to \mathbb{R}$ is twice differentiable, then $\sqrt{n}(g(X_n) - g(\mu)) \stackrel{d}{\to} N(0, \nabla g (\mu)^T \Sigma \nabla g (\mu))$.
+- Finally the following inequalities are useful in setting bounds on tail events: [:Chebyskev's inequality](#x-chebyskevs-inequality), [:Markov's theorem](#x-markovs-theorem),and [:Hölder's inequality](#x-holders-inequality).
 
-The **Slutsky theorem** says that sum or product of two variables that converge in probability also converges in probability (if, $X_n\stackrel{p}{\to} X$ and $Y_n \stackrel{p}{\to} Y$, then $X_n + Y_n\stackrel{p}{\to} X+Y$ and $X_nY_n \stackrel{p}{\to} XY$). While this is not true for two variables that converge in distribution, we can say that if $X_n\stackrel{d}{\to} X$ and $Y_n \stackrel{p}{\to} c$, then $X_n + Y_n\stackrel{d}{\to} X+c$ and $X_nY_n \stackrel{d}{\to} cX$.
+#### :x CMT
 
-Finally the following inequalities are useful in setting bounds on tail events: [:Chebyskev's inequality](#x-chebyskevs-inequality), [:Markov's theorem](#x-markovs-theorem),and [:Hölder's inequality](#x-holders-inequality).
+What are the properties of _functions of random variables_? The continuous mapping theorem (CMT) says that if $X_n$ converges to $X$ in probability/distribution, then $g(X_n)$ converges to $g(X)$ in probability/distribution.
+
+#### :x Delta method
+
+The delta method calculates the rate of convergence $g(X)$ given that of $X$. If $\sqrt{n}(X_n-\mu)\stackrel{d}{\to} N(0,\sigma^2)$ and $g'(\mu) \neq 0$, then $\sqrt{n}(g(X_n) - g(\mu)) \stackrel{d}{\to} N(0, \sigma^2 g'(\mu)^2)$. It's multivariate extension is, if $\sqrt{n}(\vec{X_n}-\vec{\mu})\stackrel{d}{\to} N(0,\Sigma)$ and $g: \mathbb{R}^k \to \mathbb{R}$ is twice differentiable, then $\sqrt{n}(g(X_n) - g(\mu)) \stackrel{d}{\to} N(0, \nabla g (\mu)^T \Sigma \nabla g (\mu))$.
+
+#### :x Slutsky theorem
+
+The Slutsky theorem says that sum or product of two variables that converge in probability also converges in probability (if, $X_n\stackrel{p}{\to} X$ and $Y_n \stackrel{p}{\to} Y$, then $X_n + Y_n\stackrel{p}{\to} X+Y$ and $X_nY_n \stackrel{p}{\to} XY$). While this is not true for two variables that converge in distribution, we can say that if $X_n\stackrel{d}{\to} X$ and $Y_n \stackrel{p}{\to} c$, then $X_n + Y_n\stackrel{d}{\to} X+c$ and $X_nY_n \stackrel{d}{\to} cX$.
+
 
 #### :x Chebyskev's inequality
 
@@ -286,7 +296,7 @@ $$E[XY]^2 \leq E[X^2]E[Y^2]$$
 
 #### :x Delta-epsilon formalization
 
-The formal definition of a limit is that we can say that $f(n)$ approaches some number $L$ in the limit $n \to \infty$, if, given a distance $\epsilon$, we can always find a threshold $N$ where for all $n > N$ the result $f(n)$ is within distance $\epsilon$ from $L$ Mathematically, $\lim_{n\to\infty} f(n) = L$ means that
+Formally, function $f(n)$ is said to approach some number $L$ in the limit $n \to \infty$, if, given any distance $\epsilon$, we can always find a threshold $N$ where for all $n > N$ the result $f(n)$ is within distance $\epsilon$ from $L$ Mathematically, $\lim_{n\to\infty} f(n) = L$ means that
 
 $$\forall \epsilon > 0, \exists N > 0 \text{ such that } \forall n \geq N, |f(n) - L| < \epsilon$$
 
@@ -307,6 +317,10 @@ $$\forall C>0,\forall\epsilon>0,\exists N,s.t.,\forall n\geq N,P\{|X_n-Y|>C\}<\e
 In other words, as $n\to\infty$, the probability distribution of the random variable $X_n - Y$ must collapse onto the point $0$. Again, notice how $X_n$ and $X$ must exist over the same probability space. It would be meaningless to subtract the expected outcome of a die roll with that of a different die roll unless the dies were always rolled simultaneously.
 
 #### :x O-notation
+
+A convenient way to deal with _rates_ of convergence is using **O-notation**. We write $X_n \in o(b_n)$ if the spread of $X_n$ shrinks faster than $b_n$ and $X_n \in O(b_n)$ if the spread of $X_n$ shrinks at the same speed (or faster) than $b_n$. For example, the CLT implies than the variance of an average shrinks at speed $1/\sqrt{n}$, so $\bar X_n \in O(n^{-1/2})$. We could also write $o_p(1)$ to simply denote that the variance of an average approaches zero. O-notation allows us to more easily make arguments about rates of convergence.
+
+Familiarity with the formal definitions and properties of O-notation (below) is helpful.
 
 Formally, we say $X_n \in o_p(b_n)$ if $X_n / b_n \stackrel{p}{\to} 0$ which in delta-epsilon notation is:
 

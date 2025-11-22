@@ -11,6 +11,8 @@
 - [ ] Code highlighting
 - [ ] Table of contents
 - [ ] Migrate to https://github.com/11ty/eleventy-base-blog
+- [ ] Show footnote on hover, maybe using littlefoot. (but littlefoot with hover doesn't work on mobile at all)
+- [ ] Setup heading anchors
 
 ## Acknowledgments
 

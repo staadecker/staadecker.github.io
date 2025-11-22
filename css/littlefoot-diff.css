@@ -1,0 +1,13 @@
+
+.littlefoot {
+  --button-padding: 0 0.1em;
+  --button-height: 1em;
+  --button-border-radius: 0.3em;
+  /* transparent */
+  --button-background-color: transparent;
+  --button-text-color: var(--text-color-link);
+}
+
+.littlefoot__button {
+    text-decoration: underline;
+}
