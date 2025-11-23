@@ -1,0 +1,1 @@
+Nutshell.setOptions({dontEmbedHeadings: true});
