@@ -6,19 +6,19 @@ tags: communication
 draft: false
 ---
 
-_These are part of my class notes for the MIT course 14.380 Statistics for Economics that I took in Fall 2025. I wrote up these notes to experiment with Nutshells, expandable boxes [:like this one](#x-nutshells) that should make my notes more accessible to different audiences and easier to navigate. My blog post provides more context. Parts of my notes may be inaccurate or poorly explained, especially the details within Nutshells that I've paid less attention to._
+_These are part of my class notes for the MIT course 14.380 Statistics for Economics that I took in the fall of 2025. I wrote up these notes to experiment with Nutshells, expandable boxes [:like this one](#x-nutshells) that should make my notes more accessible to different audiences and easier to navigate. My blog post provides more context. Parts of my notes may be inaccurate or poorly explained, especially the details within Nutshells that I've paid less attention to._
 
 #### :x Nutshells
 
-Clicking on an expandable box like you just did will reveal additional details that I didn't want to include in the main flow of the text. I'm hoping you like this feature because I spent lots of time getting it to work! Thanks to the fantastic creator Nicky Case for inventing these (see the [nutshell project](https://ncase.me/nutshell/))!
+Clicking on an expandable box like you just did will reveal additional details that I didn't want to include in the main flow of the text. I'm hoping you like this feature because I spent lots of time getting it to work! Thanks to the fantastic creator, Nicky Case for inventing these (see the [nutshell project](https://ncase.me/nutshell/))!
 
 ## Course overview
 This course covers the mathematical foundations in statistics needed for doing PhD-level economics and econometrics. It is organized as follows:
-1. [Part 1](#part-1-probability) covers the foundations of statistics, namely random variables and tools to analyze their behaviors as $n \to \infty$, including the delta method, the central limit theorem and O-notation. These tools will be useful to estimate our statistics for large sample sizes.
+1. [Part 1](#part-1-probability) covers the foundations of statistics, namely random variables and tools to analyze their behaviours as $n \to \infty$, including the delta method, the central limit theorem and O-notation. These tools will be useful to estimate our statistics for large sample sizes.
 2. [Part 2](#part-2-statistics-and-estimators) covers statistics and estimators, particularly what makes a "good" estimator and how to estimate "goodness" through tools like the Rao-Cramer bound and Fisher information.
 3. Part 3 covers statistical tests. I have not written up my notes for this part.
 
-Familiarity with calculus, matrix algebra and other math concepts like the [:taylor series expansion](#x-taylor-series) is important.
+Familiarity with calculus, matrix algebra and other math concepts like the [:Taylor series expansion](#x-taylor-series) is important.
 
 #### :x Taylor Series
 
@@ -34,7 +34,7 @@ It is often said that probability is the inverse of statistics[^1]. While statis
 
 [^1]: See for example this [StackExchange answer](https://stats.stackexchange.com/a/675).
 
-Although technically correct, I don't find this definition particularly helpful. Rather, I like to think of probability as the field of pure mathematics that serves as the foundation of statistics, a field of applied mathematics. Probability tells you what to expect given a fully-defined mathematical problem. Statistics suggests how one can convert the real world into such a problem and meaningfully interpret the problem's results. Probability is entirely built upon a [:set of mathematical axioms](#x-probability-spaces). Statistics is built on probability with an added sprinkle of _philosophy_.
+Although technically correct, I don't find this definition particularly helpful. Rather, I like to think of probability as the field of pure mathematics that serves as the foundation of statistics, a field of applied mathematics. Probability tells you what to expect given a fully defined mathematical problem. Statistics suggests how one can convert the real world into such a problem and meaningfully interpret the problem's results. Probability is entirely built upon a [:set of mathematical axioms](#x-probability-spaces). Statistics is built on probability with an added sprinkle of _philosophy_.
 
 For example, frequentist statistics (the focus of this course) adopts of philosophical framework reminiscent of Plato's cave. It assumes that there exists a real world containing the truth we wish to find, but we cannot directly observe this real world. Rather, we only get to observe samples drawn randomly from this real world from which we are to make inductions about the real world (aided by tools from probability). Bayesian statistics is another approach to statistics grounded in a different philosophy. In general, the application of probability to the real world is a contested and fascinating area of philosophy[^2].
 
@@ -46,7 +46,7 @@ We're now ready to dive into probability, the mathematical framework that will u
 
 Formally, probability is a subset of measure theory, a branch of mathematics that helps deal with measurable sets such as magnitudes, masses, geometrical measures like length, area, volume, and, of course, probability.
 
-From a measure theory perspective, all probabilities originate from a **probability space**, a triplet of three mathematical objects: $(\Omega, \mathcal{F}, P)$. $\Omega$ is the **sample space** which represents all potential outcomes (realizations) of an experiment (i.e. a single draw). Note that these realizations $\omega$ need not be a number; $\omega$ could be the description "the first die rolled a 5 and the second rolled a 4." Random variables are functions that map these realizations $\omega$ to the space of real numbers $\mathbb{R}$. In order for random variables to have a cumulative probability distribution $F_X(t): \mathbb{R} \to [0,1]$, measure theory introduces the concept of a **probability measure** $P$, a function that maps _measurable sets of outcomes_ $\mathcal{F}$ to the probability of observing an outcome in that set. Note the language: although conceptually you can think of a probability measure $P$ as simply mapping outcomes $\omega \in \Omega$ to the probability $[0,1]$ of that outcome, it is actually mapping all _measurable_ sets of outcomes $\mathcal{F}$ to their probabilities. While beyond the scope of this course, $\mathcal{F}$ is necessary because not all sets of $\Omega$ are measurable (see this [video on Vitali sets](https://www.youtube.com/watch?v=hs3eDa3_DzU)).
+From a measure theory perspective, all probabilities originate from a **probability space**, a triplet of three mathematical objects: $(\Omega, \mathcal{F}, P)$. $\Omega$ is the **sample space** which represents all potential outcomes (realizations) of an experiment (i.e. a single draw). Note that these realizations $\omega$ need not be a number; $\omega$ could be the description "The first die rolled a 5 and the second rolled a 4." Random variables are functions that map these realizations $\omega$ to the space of real numbers $\mathbb{R}$. In order for random variables to have a cumulative probability distribution $F_X(t): \mathbb{R} \to [0,1]$, measure theory introduces the concept of a **probability measure** $P$, a function that maps _measurable sets of outcomes_ $\mathcal{F}$ to the probability of observing an outcome in that set. Note the language: although conceptually you can think of a probability measure $P$ as simply mapping outcomes $\omega \in \Omega$ to the probability $[0,1]$ of that outcome, it is actually mapping all _measurable_ sets of outcomes $\mathcal{F}$ to their probabilities. While beyond the scope of this course, $\mathcal{F}$ is necessary because not all sets of $\Omega$ are measurable (see this [video on Vitali sets](https://www.youtube.com/watch?v=hs3eDa3_DzU)).
 
 To summarize, measure theory formalizes probability as follows:
 - Probabilities originate from a probability space $(\Omega, \mathcal{F}, P)$. 
@@ -68,7 +68,7 @@ A **random variable** (r.v.) is a mathematical object *dependent on random event
 
 Importantly, random variables have a probability distribution. $X \sim F_x$ indicates that $X$ is a random variable with cumulative probability distribution (cdf) $F_x(t) = P \{X \leq t\}$. Key tools to work with random variables include the [:probability density function](#x-def-pdf) (pdf) $f_X(t)$, the [:expected value function](#x-def-expected-value) $E[X]$, [:variance](#x-variance) $V(X)$, [:moments](#x-moments), and [:important properties](#x-properties-of-random-variables) of these abstractions.
 
-Common probability distributions include the [:binomial distribution](#x-binomial-distribution), [:poisson and gamma distribution](#x-poisson-distribution), [:uniform distribution](#x-uniform-distribution), and [:normal distribution](#x-normal-distribution).
+Common probability distributions include the [:binomial distribution](#x-binomial-distribution), [:Poisson and gamma distribution](#x-poisson-distribution), [:uniform distribution](#x-uniform-distribution), and [:normal distribution](#x-normal-distribution).
 
 #### :x Def. pdf
 
@@ -243,19 +243,19 @@ If and only if $X$ and $Y$ are independent, the following properties are true:
 
 Later in the course, we will want to make approximations for large sample sizes. For example, we might want to argue that some random variable of our current sample $X_n$ is actually well approximated by the random variable $X$ when $n$ is large. Such arguments can simplify our statistics since often $X$ is a simpler expression to work with than $X_n$.
 
-To make such arguments, we must introduce mathematical tools to deal with _asymptotics_—the behavior of random variables as $n$ approaches infinity (denoted $n \to \infty$).
+To make such arguments, we must introduce mathematical tools to deal with _asymptotics_—the behaviour of random variables as $n$ approaches infinity (denoted $n \to \infty$).
 
-You may be familiar with limits and their [:delta-epsilon formalization](#x-delta-epsilon-formalization) to describe the behavior of (non-random) numbers that approach infinity. An extension of this same concept exists for random variables.
+You may be familiar with limits and their [:delta-epsilon formalization](#x-delta-epsilon-formalization) to describe the behaviour of (non-random) numbers that approach infinity. An extension of this same concept exists for random variables.
 
 Specifically, there are two notable ways in which a random variable $X_n$ can be said to converge onto a different random variable $Y$. 
 
 1. **Convergence in distribution** (denoted $X_n \stackrel{d}{\to}Y$) occurs when the probability distribution of $X_n$ approaches that of $Y$ (the CDFs "line up"). Distribution-wise $X_n$ and $Y$ are identical in the limit. However, the _outcomes_ of a draw of $X_n$ and $Y$ need not be identical. For example, say you have two magic coins that always land on opposite faces. (When you toss them simultaneously one always lands head and the other tail.) The distribution of both coins are equal (50% heads, 50% tails) but their realizations are not.
 
-2. **Convergence in probability** (denoted $X_n \stackrel{p}{\to}Y$) is the stronger idea that not only do the distributions of $X_n$ and $Y$ match in the limit, but also the _realizations_ of any individual draws match (in the limit). Of course, for this concept to make any sense, $X_n$ and $Y$ must come from the same draw (i.e. the same [:probability space](#x-probability-spaces)). (If the magic coins can be tossed separately you cannot talk about comparing their outcomes, only their distributions.)
+2. **Convergence in probability** (denoted $X_n \stackrel{p}{\to}Y$) is the stronger idea that not only do the distributions of $X_n$ and $Y$ match in the limit, but also the _realizations_ of any individual draws match (in the limit). Of course, for this concept to make any sense, $X_n$ and $Y$ must come from the same draw (i.e. the same [:probability space](#x-probability-spaces)). (If the magic coins can be tossed separately, you cannot talk about comparing their outcomes, only their distributions.)
 
 Both types of convergence have [:formal definitions and properties](#x-definitions-of-convergence) that are useful to know (e.g. convergence in probability implies convergence in distribution).
 
-Now that we are equipped to discuss asymptotic behaviors we can introduce several useful tools:
+Now that we are equipped to discuss asymptotic behaviours we can introduce several useful tools:
 
 - The **law of large numbers** (LLN) states that the average of $n$ independent and identically distributed (iid) random variables converges in probability to their expected value: $\bar{X_n} \stackrel{p}{\to} E[X_i]$.
 
@@ -265,7 +265,7 @@ $$\sqrt{n}(\bar{X_n}-\mu_X) \stackrel{d}{\to} N(0,\sigma^2)$$
 
 - [:**O-notation**](#x-o-notation) helps us make arguments about _rates_ of convergence.
 
-- The [:**Continuous Mapping Theorem**](#x-cmt) (CMT), [:**Delta Method**](#x-delta-method), and [:**Slutsky Theorem**](#x-slutsky-theorem) help derive the asymptotic behaviors of functions of random variables (e.g. $g(X)\to ?$ or $X+Y \to?$)
+- The [:**Continuous Mapping Theorem**](#x-cmt) (CMT), [:**Delta Method**](#x-delta-method), and [:**Slutsky Theorem**](#x-slutsky-theorem) help derive the asymptotic behaviours of functions of random variables (e.g. $g(X)\to ?$ or $X+Y \to?$)
 
 - Finally the following inequalities are useful in setting bounds on tail events: [:Chebyskev's inequality](#x-chebyskevs-inequality), [:Markov's theorem](#x-markovs-theorem),and [:Hölder's inequality](#x-holders-inequality).
 
@@ -359,7 +359,7 @@ Some helpful properties of o-notation:
 
 Now that we've covered the mathematical tools of probability we are ready to discuss statistics. Recall that, much like [Plato's cave](https://en.wikipedia.org/wiki/Allegory_of_the_cave), the philosophy of frequentist statistics is that there exists a real world that we cannot observe directly. Rather, we only have a sample of that real world from which me makes inductions. We shall denote this sample as $x = (x_1, \ldots, x_n)$. Before actually observing the sample, $x$ is a random variable since the value of any draw $x_i$ is still uncertain. As such, we will denote the before-observation sample as $X = (X_1, \ldots, X_n)$.
 
-A **statistic** $T(X)$ is any function of our sample $X = (X_1, \ldots, X_n)$. For example, the sample mean $\bar X$ is a statistic. Again, note that a statistic *is* a random variable because, until we actually take the sample and calculate the statistic, there is a distribution of results we might expect: the **sampling distribution**. Since statistics are random variables, we can discuss their properties like $E[\bar X]$ and $Var(\bar X)$.
+A **statistic** $T(X)$ is any function of our sample $X = (X_1, \ldots, X_n)$. For example, the sample mean $\bar X$ is a statistic. Again, note that a statistic *is* a random variable because until we actually take the sample and calculate the statistic, there is a distribution of results we might expect: the **sampling distribution**. Since statistics are random variables, we can discuss their properties like $E[\bar X]$ and $Var(\bar X)$.
 
 **Parameters** are properties of the real (unobservable) world. Some statistics are particularly useful to estimate parameters. We call these statistics **estimators** and typically denote them with a hat (i.e. estimator $\hat \theta$ for parameter $\theta$). For example, sample mean $\bar X$ is an estimator of the real average $\mu$ (and thus, $X$ and $\hat\mu$ are often used interchangeably).
 
