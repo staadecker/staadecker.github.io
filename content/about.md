@@ -6,4 +6,4 @@ const eleventyNavigation = {
 ---
 # About
 
-I am a person that writes stuff.
+Most of writing can be found on [my Substack](https://staadecker.substack.com/). However, occasionally I wish to write something that requires custom features like my experiment with Nutshells. In those cases, I use this website.

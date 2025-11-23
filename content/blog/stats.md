@@ -6,7 +6,7 @@ tags: communication
 draft: false
 ---
 
-These are my class notes for the MIT course _14.380 Statistics for Economics_ that I took in Fall 2025. I wrote up these notes to experiment with the tool [Nutshell](https://ncase.me/nutshell/). [This blog post](TODO) provides more context on the experiment. In short, I've used expandable boxes [:like this](#x-nutshells) throughout the text to make my notes accessible to different audiences and easier to navigate.
+_These are part of my class notes for the MIT course 14.380 Statistics for Economics that I took in Fall 2025. I wrote up these notes to experiment with Nutshells, expandable boxes [:like this one](#x-nutshells) that should make my notes more accessible to different audiences and easier to navigate. My blog post [here](TODO) provides more context. Parts of my notes may be inaccurate or poorly explained, especially the details within Nutshells that I've paid less attention to._
 
 #### :x Nutshells
 
@@ -15,14 +15,14 @@ Clicking on an expandable box like you just did will reveal additional details t
 ## Course overview
 This course covers the mathematical foundations in statistics needed for doing PhD-level economics and econometrics. It is organized as follows:
 1. [Part 1](#part-1-probability) covers the foundations of statistics, namely random variables and tools to analyze their behaviors as $n \to \infty$, including the delta method, the central limit theorem and O-notation. These tools will be useful to estimate our statistics for large sample sizes.
-2. [Part 2](#part-2-statistics) covers statistics and estimators, particularly what makes a "good" estimator and how to estimate "goodness" through tools like the Rao-Cramer bound and Fisher information.
-3. [Part 3](#part-3-statistical-tests) covers statistical tests.
+2. [Part 2](#part-2-statistics-and-estimators) covers statistics and estimators, particularly what makes a "good" estimator and how to estimate "goodness" through tools like the Rao-Cramer bound and Fisher information.
+3. Part 3 covers statistical tests. I have not written up my notes for this part.
 
 Familiarity with calculus, matrix algebra and other math concepts like the [:taylor series expansion](#x-taylor-series) is important.
 
 #### :x Taylor Series
 
-We will often approximate $f(x) - f(a)$ using the [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) expansion:
+Proofs often rely on approximating $f(x) - f(a)$ using the [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) expansion:
 
 $$f(x)-f(a)=\frac{f'(a)}{1!}(x-a)+\frac{f''(a)}{2!}(x-a)^2+\ldots$$
 
@@ -34,25 +34,30 @@ It is often said that probability is the inverse of statistics[^1]. While statis
 
 [^1]: See for example this [StackExchange answer](https://stats.stackexchange.com/a/675).
 
-Although technically correct, I don't find this definition particularly helpful. Rather, I like to think of probability as the field of pure mathematics that serves as the foundation of statistics, a field of applied mathematics. Probability tells you what to expect given a fully-defined mathematical problem. Statistics suggests how one can convert the real world into such a problem and meaningfully interpret the problem's results. Probability is entirely built upon a [:set of mathematical axioms](#x-probability-space-and-the-formal-definition-of-probability). Statistics is built on probability with an added sprinkle of _philosophy_.
+Although technically correct, I don't find this definition particularly helpful. Rather, I like to think of probability as the field of pure mathematics that serves as the foundation of statistics, a field of applied mathematics. Probability tells you what to expect given a fully-defined mathematical problem. Statistics suggests how one can convert the real world into such a problem and meaningfully interpret the problem's results. Probability is entirely built upon a [:set of mathematical axioms](#x-probability-spaces). Statistics is built on probability with an added sprinkle of _philosophy_.
 
 For example, frequentist statistics (the focus of this course) adopts of philosophical framework reminiscent of Plato's cave. It assumes that there exists a real world containing the truth we wish to find, but we cannot directly observe this real world. Rather, we only get to observe samples drawn randomly from this real world from which we are to make inductions about the real world (aided by tools from probability). Bayesian statistics is another approach to statistics grounded in a different philosophy. In general, the application of probability to the real world is a contested and fascinating area of philosophy[^2].
 
-[^2]: For example, see this [cheeky paper](https://statistics.berkeley.edu/sites/default/files/tech-reports/611.pdf) or, for those with access, read: 
-	
-	Freedman, D. Some issues in the foundation of statistics. Found Sci 1, 19–39 (1995). https://doi.org/10.1007/BF00208723
+[^2]: For example, see this [cheeky paper](https://statistics.berkeley.edu/sites/default/files/tech-reports/611.pdf) or, for those with access, read: Freedman, D. Some issues in the foundation of statistics. Found Sci 1, 19–39 (1995). https://doi.org/10.1007/BF00208723
 
 We're now ready to dive into probability, the mathematical framework that will underpin the statistics discussed in Parts 2 and 3.
 
-#### :x Probability Space and the Formal Definition of Probability
+#### :x Probability spaces
 
-The formal definition of probability is based on measure theory. Measure theory helps tie seemingly different mathematical concepts together including magnitude, mass, probability, and geometrical measures like length, area, volume. TODO
+Formally, probability is a subset of measure theory, a branch of mathematics that helps deal with measurable sets such as magnitudes, masses, geometrical measures like length, area, volume, and, of course, probability.
 
-The philosophy of frequentist statistics is that there exists an ideal world with potential outcomes $\Omega$. Every experiment produces a realization $\omega \in \Omega$. Here $w$ need not be a number; $\omega$ could be the description "the first die rolled a 5 and the second rolled a 4". Random variables are functions that map these realizations $w$ to the space of real numbers $\mathbb{R}$. Importantly, a random variable also has an associated cumulative probability distribution $F_X(t): \mathbb{R} \to [0,1]$. This cdf requires a probability measure $Pr$, a function that maps sets to the probability of observing that set. While it might be tempting to say $Pr: \Omega \to [0,1]$, it is technically more accurate to define an intermediate set $\mathcal{F}$ which constitutes all possible measurable subsets of $w$ as this richer space $F$ allows for a more interesting $Pr: \mathcal{F} \to [0,1]$. Summarizing:
-- $\Omega$ is the space of all potential experimental outcomes
-- $\mathcal{F}$ is the set of all measurable subsets of $\Omega$
-- $Pr: \mathcal{F} \to [0,1]$ is a probability measure
-- $X: \Omega \to \mathbb{R}$ is a random variable mapping outcomes to a number associated with a cdf defined using $Pr$ and $\mathcal{F}$
+From a measure theory perspective, all probabilities originate from a **probability space**, a triplet of three mathematical objects: $(\Omega, \mathcal{F}, P)$. $\Omega$ is the **sample space** which represents all potential outcomes (realizations) of an experiment (i.e. a single draw). Note that these realizations $\omega$ need not be a number; $\omega$ could be the description "the first die rolled a 5 and the second rolled a 4." Random variables are functions that map these realizations $\omega$ to the space of real numbers $\mathbb{R}$. In order for random variables to have a cumulative probability distribution $F_X(t): \mathbb{R} \to [0,1]$, measure theory introduces the concept of a **probability measure** $P$, a function that maps _measurable sets of outcomes_ $\mathcal{F}$ to the probability of observing an outcome in that set. Note the language: although conceptually you can think of a probability measure $P$ as simply mapping outcomes $\omega \in \Omega$ to the probability $[0,1]$ of that outcome, it is actually mapping all _measurable_ sets of outcomes $\mathcal{F}$ to their probabilities. While beyond the scope of this course, $\mathcal{F}$ is necessary because not all sets of $\Omega$ are measurable (see this [video on Vitali sets](https://www.youtube.com/watch?v=hs3eDa3_DzU)).
+
+To summarize, measure theory formalizes probability as follows:
+- Probabilities originate from a probability space $(\Omega, \mathcal{F}, P)$. 
+- $\Omega$ is the sample space, the space of all potential experimental outcomes.
+- $\omega \in \Omega$ is any one sample or outcome.
+- Random variables are functions that map $\Omega \to \mathbb{R}$.
+- $\mathcal{F}$ is the space of all measurable subsets of $\Omega$ (i.e. events).
+- The probability measure $P$ maps $\mathcal{F} \to [0,1]$.
+- The cumulative probability distribution $F_X$ stems from combining the probability measure $P$ and the random variable $X$.
+
+To learn more, read about [sigma algebras](https://en.wikipedia.org/wiki/%CE%A3-algebra) and [measure theory](https://en.wikipedia.org/wiki/Measure_(mathematics)).
 
 ### Random variables
 
@@ -95,13 +100,18 @@ The mean and variance are special cases of moments: mathematical objects that he
 
 #### :x Properties of random variables
 
-- Expected value function is linear
-	- $E[X+Y] = E[X] + E[Y]$
-	- $E[aX] = aE[X]$
-- Variance is not
-	- $Var(X+Y) \neq Var(X) + Var(Y)$ (in all cases)
+The expected value function is linear,
+$$E[X+Y] = E[X] + E[Y]$$
+$$E[aX] = aE[X]$$
+
+But variance is not: 
+
+$$Var(X+Y) \neq Var(X) + Var(Y)$$
+
+Rather,
 	- $Var(X+a)=Var(X)$ (shift agnostic)
 	- $Var(aX)=a^2Var(X)$
+
 An often used property is:
 $$Var(X) =E[X^2] - E[X]^2$$
 
@@ -206,7 +216,7 @@ $$-1 \leq corr(X,Y) \leq 1$$
 
 ##### :x Corr Proof
 
-Let $A = X - E[X]$ and $B = Y - E[Y]$. From Holder's inequality we know:
+Let $A = X - E[X]$ and $B = Y - E[Y]$. From [:Holder's inequality](#x-holders-inequality) we know:
 
 $$E[AB]^2 \leq E[A^2]E[B^2]$$
 
@@ -241,7 +251,7 @@ Specifically, there are two notable ways in which a random variable $X_n$ can be
 
 1. **Convergence in distribution** (denoted $X_n \stackrel{d}{\to}Y$) occurs when the probability distribution of $X_n$ approaches that of $Y$ (the CDFs "line up"). Distribution-wise $X_n$ and $Y$ are identical in the limit. However, the _outcomes_ of a draw of $X_n$ and $Y$ need not be identical. For example, say you have two magic coins that always land on opposite faces. (When you toss them simultaneously one always lands head and the other tail.) The distribution of both coins are equal (50% heads, 50% tails) but their realizations are not.
 
-2. **Convergence in probability** (denoted $X_n \stackrel{p}{\to}Y$) is the stronger idea that not only do the distributions of $X_n$ and $Y$ match in the limit, but also the _realizations_ of any individual draws match (in the limit). Of course, for this concept to make any sense, $X_n$ and $Y$ must come from the same draw (i.e. the same "probability space"). (If the magic coins can be tossed separately you cannot compare their outcomes, only their distributions.)
+2. **Convergence in probability** (denoted $X_n \stackrel{p}{\to}Y$) is the stronger idea that not only do the distributions of $X_n$ and $Y$ match in the limit, but also the _realizations_ of any individual draws match (in the limit). Of course, for this concept to make any sense, $X_n$ and $Y$ must come from the same draw (i.e. the same [:probability space](#x-probability-spaces)). (If the magic coins can be tossed separately you cannot talk about comparing their outcomes, only their distributions.)
 
 Both types of convergence have [:formal definitions and properties](#x-definitions-of-convergence) that are useful to know (e.g. convergence in probability implies convergence in distribution).
 
@@ -296,7 +306,7 @@ $$E[XY]^2 \leq E[X^2]E[Y^2]$$
 
 #### :x Delta-epsilon formalization
 
-Formally, function $f(n)$ is said to approach some number $L$ in the limit $n \to \infty$, if, given any distance $\epsilon$, we can always find a threshold $N$ where for all $n > N$ the result $f(n)$ is within distance $\epsilon$ from $L$ Mathematically, $\lim_{n\to\infty} f(n) = L$ means that
+Formally, function $f(n)$ is said to approach some number $L$ in the limit $n \to \infty$, if, given any distance $\epsilon$, we can always find a threshold $N$ where for all $n > N$ such that the result $f(n)$ is within distance $\epsilon$ from $L$. Mathematically, $\lim_{n\to\infty} f(n) = L$ means that
 
 $$\forall \epsilon > 0, \exists N > 0 \text{ such that } \forall n \geq N, |f(n) - L| < \epsilon$$
 
@@ -314,7 +324,7 @@ $X_n$ is said to converge _in probability_ onto $Y$ (denoted $X_n \stackrel{p}{\
 
 $$\forall C>0,\forall\epsilon>0,\exists N,s.t.,\forall n\geq N,P\{|X_n-Y|>C\}<\epsilon$$
 
-In other words, as $n\to\infty$, the probability distribution of the random variable $X_n - Y$ must collapse onto the point $0$. Again, notice how $X_n$ and $X$ must exist over the same probability space. It would be meaningless to subtract the expected outcome of a die roll with that of a different die roll unless the dies were always rolled simultaneously.
+In other words, as $n\to\infty$, the probability distribution of the random variable $X_n - Y$ must collapse onto the point $0$. Again, notice how $X_n$ and $Y$ must exist over the same probability space. It would be meaningless to subtract the expected outcome of a die roll with that of a different die roll unless the dies were always rolled simultaneously.
 
 #### :x O-notation
 
@@ -345,32 +355,22 @@ Some helpful properties of o-notation:
 - $O_p(n^\alpha) + O_p(n^\beta) \to O_p(max\{n^\alpha,n^\beta\})$
 - $O_p(n^\alpha) + o_p(n^\alpha) \to O_p(n^\alpha)$
 
+## Part 2: Statistics and estimators
 
+Now that we've covered the mathematical tools of probability we are ready to discuss statistics. Recall that, much like [Plato's cave](https://en.wikipedia.org/wiki/Allegory_of_the_cave), the philosophy of frequentist statistics is that there exists a real world that we cannot observe directly. Rather, we only have a sample of that real world from which me makes inductions. We shall denote this sample as $x = (x_1, \ldots, x_n)$. Before actually observing the sample, $x$ is a random variable since the value of any draw $x_i$ is still uncertain. As such, we will denote the before-observation sample as $X = (X_1, \ldots, X_n)$.
 
-## Part 2: Frequentist statistics
+A **statistic** $T(X)$ is any function of our sample $X = (X_1, \ldots, X_n)$. For example, the sample mean $\bar X$ is a statistic. Again, note that a statistic *is* a random variable because, until we actually take the sample and calculate the statistic, there is a distribution of results we might expect: the **sampling distribution**. Since statistics are random variables, we can discuss their properties like $E[\bar X]$ and $Var(\bar X)$.
 
-Much like Plato's cave, the philosophy of frequentist statistics is that there exists an ideal world that we cannot observe directly. Our real world is a sample of that ideal world from which me makes inductions. Rather than proving statements deductively (like in most of mathematics), we will use our observations to make inductions about our ideal unobservable world.
+**Parameters** are properties of the real (unobservable) world. Some statistics are particularly useful to estimate parameters. We call these statistics **estimators** and typically denote them with a hat (i.e. estimator $\hat \theta$ for parameter $\theta$). For example, sample mean $\bar X$ is an estimator of the real average $\mu$ (and thus, $X$ and $\hat\mu$ are often used interchangeably).
 
-A **statistic** $T(X)$ is any function of our sample $X = (X_1, \ldots, X_n)$. A statistic *is* a random variable because, until we actually take the sample and calculate the statistic, there is a distribution of results we might expect: the **sampling distribution**.
+What makes a "good" estimator? There are several properties to evaluate the goodness of estimators:
 
-Some statistics are used to estimate parameters of our ideal world. We call these statistics **estimators** and typically denote them with a hat (i.e. estimator $\hat \theta$ for parameter $\theta$).
+- [:Bias](#x-bias), whether over multiple experiments the average of the estimators converges onto the parameter.
+- [:Efficiency](#x-efficiency), a proxy for the spread (variance) of the sampling distribution of the estimator.
+- [:Consistency](#x-consistency), whether for large sample sizes, the bias converges to $0$. 
+- [:Asymptotic normality](#x-asymptotic-normality), whether the sampling distribution of an estimator converges onto a normal.
 
-What makes a "good" estimator? To evaluate the goodness of estimators we should consider [:bias](#x-bias), [:efficiency](#x-efficiency), [:sufficiency](#x-sufficient-statistic), and [:consistency](#x-consistency).
-
-
-
-
-The **Glivenko-Cantelli theorem** says that an empirical cdf $\hat{F}_n(x)$ based on a sample $X_1, \ldots, X_n$ converges on the unobservable distribution $F$. $$\text{sup}_{x\in \mathbb{R}} |\hat F_n(x)-F(x)| \stackrel{p}{\to} 0$$
-
-There are 4 techniques to find the distribution of a statistic:
-1. Analytically - exact but hard for most distributions
-2. Monte carlo (by simulation) - only works if you know the unobservable distribution
-3. Asymptotic approximation - using the CTL, delta method, slutsky theorem to show that for large $n$ the statistic approaches a given distribution
-4. Non-parametric bootstrap - same as monte carlo but use the emprical (sample) distribution instead of the unknown ideal distribution. Works for large $n$ due to glivenko-cantelli theorem.
-
-A plugin estimator is the estimator that uses the same formula as that for the parameter, except using the empirical distribution instead.
-
-If $X_1, \ldots, X_n$ are iid random normal variables then $\bar X_n$ and $s_n^2$ are independent, $\bar{X}_n \sim N(\mu, \sigma^2 / n)$, and $s^2 \sim \sigma^2 \chi^2_{n-1} / (n-1)$.
+Note that there is a **bias-efficiency tradeoff** in that there is always a more efficient estimator than the unbiased one. Moreover, the [:**Rao-Cramer bound**](#rao-cramer-bound) sets a lower bound on the variance of an estimator (this bound is based in the notion of Fisher information, a proxy for how much information the sample can convey about the distribution).
 
 #### :x Bias
 
@@ -395,11 +395,15 @@ One way to prove that a statistic is sufficient is simply to derive the analytic
 
 Note that $T$ could actually be several statistics (a vector of statistics if you like) that, combined, capture the information in $\theta$ (or more parameters). There is not always one sufficient statistic per parameter. (For example, estimating $\theta$ in $U[\theta, 1+\theta]$ involves two sufficient statistics $\text{min}_{x_i}$ and $\text{max}_{x_i}$!)
 
-Technically, the entire sample $X_n$ is a sufficient statistic of $X$ (with $n$ terms) but this is not very helpful. A **minimal sufficient statistic** is one that contains all the information on the parameters while being as "small" as possible. That given a sufficient statistic $T^*(X)$ we can say it is minimal if it can be computed from any other sufficient statistic (i.e. $r$ exists and $T^*(X) = r(T(X))$). If this weren't possible, this means that there's another sufficient statistic with less information than $T^*(X)$ so $T^*(X)$ is not minimal. 
+Technically, the entire sample $X_n$ is a sufficient statistic of $X$ (with $n$ terms) but this is not very helpful. A **minimal sufficient statistic** is one that contains all the information on the parameters while being as "small" as possible. Given a sufficient statistic $T^*(X)$ we can say it is minimal if it can be computed from any other sufficient statistic (i.e. $r$ exists and $T^*(X) = r(T(X))$). If this weren't possible, this means that there's another sufficient statistic with less information than $T^*(X)$ so $T^*(X)$ is not minimal. 
 
-The **Rao-Blackwell theorem** proves that for any estimator $\hat \theta$ of $\theta$ that depends not only on the sufficient statistic $T(X)$, a just as good estimator $\hat \theta_2 = E(\hat \theta | T(X) )$ exists and depends only on $T(X)$. Here, just as good means that $MSE(\hat \theta_2) \leq MSE(\hat \theta)$ and $\hat \theta_2$ is unbiased if $\hat \theta$ was. The intuition behind this theorem is that an estimator should provide one value per $T(X)$ because any more variation is noise. If it doesn't, the estimator can be improved by averaging across all values with the same $T(X)$ and thus removing this noise.
+#### :x Rao-Blackwell
 
-This theorem allows for efficient Monte-Carlo simulations. Simply draw $B$ samples of size $n$ each. Compute $\hat \theta$ and $T(X)$ for each sample. Now average all the $\hat \theta$ that originated from samples with the same $T(X)$ to obtain an estimate $\hat \theta_2$ of $\theta$ for a given statistic $T(X)$.
+The **Rao-Blackwell theorem** proves that for any estimator $\hat \theta$ of $\theta$ that depends not only on the [:sufficient statistic](#x-sufficient-statistic) $T(X)$, a just as good estimator $\hat \theta_2 = E(\hat \theta | T(X) )$ exists and depends only on $T(X)$. Here, just as good means that $MSE(\hat \theta_2) \leq MSE(\hat \theta)$ and $\hat \theta_2$ is unbiased if $\hat \theta$ was. 
+
+The intuition behind this theorem is that an estimator should provide one value per $T(X)$ because any more variation is noise. If it doesn't, the estimator can be improved by averaging across all values with the same $T(X)$ and thus removing this noise.
+
+This theorem allows us to derive an improved estimator $\hat\theta_2$. Although this can sometimes be tricky to do analytically, it is easy to do with a [:Monte-Carlo simulation](#x-monte-carlo). Simply draw $B$ samples of size $n$ each. Compute $\hat \theta$ and $T(X)$ for each sample. Now average all the $\hat \theta$ that originated from samples with the same $T(X)$ to obtain an estimate $\hat \theta_2$ of $\theta$ for a given statistic $T(X)$.
 
 #### :x Efficiency
 
@@ -409,33 +413,98 @@ The **efficiency** of an estimator is measured using the mean-squared error: $MS
 
 **Consistency** is the concept that an estimator $\hat \theta_n$ is unbiased as $n \to \infty$. Formally: $\hat\theta_n \stackrel{p}{\to} \theta$.
 
+#### :x Asymptotic normality
+
+An estimator $\hat\theta$ is **asymptotically normal** if $r_n(\hat\theta - a_n) \stackrel{d}{\to} N(0,\sigma^2)$. Typically, $r_n=\sqrt{n}$ and $a_n = \theta$.
+
 #### :x Factorization theorem
 
 The **factorization theorem** says that $T(x)$ is a sufficient statistic if and only the pdf (or pmf) can be expressed as: $$f(x|\theta)=g(T(x),\theta)\cdot h(x)$$
 Notice how the pdf/pmf has been split into two parts: $g$ depends only on the statistic and parameter while $h$ depends only on the sample data. The ability to decompose the pdf/pmf as such indicates that $T$ is a sufficient statistic.
 
-### Generating statistics
+### Generating estimators and their sampling distributions
 
-Sometimes there is no unbiased estimator (see notes for proof). In these cases, the **bootstrap bias corrector** can help produce a less biased corrector: Sample $b \times n$ times from our empirical observations. For every $b$ calculate the "real" parameter value, average across all $b$, then subtract out the estimator to get an estimate of the systemic bias. This estimate can be removed from the estimator to make a less biased one. (This technique removes the O(1/n) bias term, but not smaller biases. It could also be calculated by analytically calculating the bias.)
+How does one _find_ a good estimator?
 
-**Bias-variance tradeoff** is the notion that there's always a more efficient (lower MSE) estimator than the unbiased one (proof in notes).
+- Use the plugin estimator: the estimator that uses the same formula as that for the parameter, except using the empirical distribution instead. (e.g. sample mean $\hat\mu=\frac{1}{n}\sum_{i=1}^n X_i$ to approximate $\mu=\int_{-\infty}^\infty xf(x)dx$)
 
-An estimator $\hat\theta$ is **asymptotically normal** if $r_n(\hat\theta - a_n) \stackrel{d}{\to} N(0,\sigma^2)$. Typically, $r_n=\sqrt{n}$ and $a_n = \theta$.
+- Use the notion of [:sufficient statistics](#x-sufficient-statistic), a set of tools based on the fact that certain parameters can be entirely "captured" by a set of statistics ("sufficient statistics"). Estimators that only depend on those sufficient statistics are more efficient and less biased (or at least no worse, see [:Rao-Blackwell theorem](#x-rao-blackwell)).
 
-Beyond the plug in estimator (aka. method of analogy) and the **method of moments** (see notes), one can generate the **maximum likelihood estimator**: the estimator that maximizes the likelihood of observing $X$ if $\theta$ were equal to the estimator. This MLE estimator can be found by solving the first order conditions of the likelihood function $L$ (or the log of the likelihood function, aka. log-likelihood $l$). The likelihood function is simply the joint probability distribution.
+- Derive the [:maximum likelihood estimator](#x-mle) (MLE). MLE estimators are consistent and asymptotically normal with variance approaching the [:Rao-Cramer bound](#rao-cramer-bound).
 
-### Efficient estimators
-Note: The following section only applies to parametric families where the support of the distribution (i.e. the "domain", where $f(x) \neq 0$) is independent of $\theta$.
+- Use a [:bootstrap-bias correction](#x-bootstrap-bias-correction), especially useful for the cases where there is no unbiased estimator.
 
-What is the most efficient estimator? The **rao-cramer bound** provides a partial answer as it says that under certain conditions (see below) the variance of $\hat\theta$ has a lower bound: $$Var(\hat\theta)\geq\left(\frac{d}{d\theta}E_\theta[\hat\theta(X)]\right)^2\frac{1}{I(\theta)}$$
-where $I(\theta)$ is the fisher information: $$I(\theta)=E_\theta\left[S(\theta\mid X)^2\right]$$
-And $S$ is the score $$S(\theta \mid x) = \frac{\partial }{\partial \theta}\log f(x\mid\theta)$$
+- Use the [method of moments](https://en.wikipedia.org/wiki/Method_of_moments_(statistics)) (not covered in depth in the course).
+
+Once one obtains the formula for an estimator (or statistic), how can one calculate its sampling distribution? There are generally four ways to do so:
+
+1. The distribution of simple estimators can be derived analytically. For example, it can be shown that if $X_1, \ldots, X_n$ are iid random normal variables, the distribution of the sample mean $\bar X$ is the normal $N(\mu, \sigma^2 / n)$ and the distribution of the sample variance $s^2$ is $\sigma^2 \chi^2_{n-1} / (n-1)$.
+
+2. For some estimators, the distribution can be approximated for large $n$ by using asymptotic arguments (e.g. using the CLT, delta method, Slutsky theorem). For example, the central limit theorem says that for large enough $n$, $\bar X \sim N(\mu, \sigma^2/n)$.
+
+3. Via a computer simulation with the [:Monte Carlo method](#x-monte-carlo) (requires knowing or assuming the true distribution).
+
+4. Via a computer simulation with the [:non-parametric bootstrap method](#n-p-bootstrap) (doesn't require knowing the true distribution but requires large enough $n$).
+
+Note that many of these methods require assuming a parametric family for the true distribution (e.g. assuming we're sampling from a Poisson distribution). As such, we might have a good estimator, but if our assumption is poor (aka. model mis-specification), we will be estimating the wrong thing. Specifically, we will be estimating a parameter $\theta_0$ which is "pseudo-true" in the sense that it is a mix of the real and assumed distribution. Whether $\theta_0$ is meaningful depends on the context (e.g. how far off are we), however, the variance of the estimator of $\theta_0$ can be estimated using [:White's standard errors](#x-whites-standard-errors) and this formula for variance is often preferred since it is thought to be more "robust" to model mis-specification.
+
+#### :x White's standard errors
+
+In a famous 1980 paper, White showed that if the assumed distribution is incorrect, the maximum likelihood estimator $\hat \theta_{ML}$ estimates a "pseudo-true" parameter $\theta_0$ in such a way that the MLE is still asymptotically normal except at rate of $\Sigma_2^{-1}\Sigma_1\Sigma_2^{-1}$. Specifically:
+
+$$\sqrt{n}(\hat \theta_{ML} - \theta_0) \stackrel{d}{\to} N(0,\Sigma_2^{-1}\Sigma_1\Sigma_2^{-1})$$
+
+where $\Sigma_1$ and $\Sigma_2$ are both equal to the Fisher information $I(\theta_0)$ except calculated in different ways:
+
+$$\Sigma_1 = E\left[S(X \mid \theta_0)^2\right] \qquad \Sigma_2 -E\left[\frac{\partial^2 l}{\partial\theta_0^2}\right]$$
+
+This formula for estimating the variance is thus preferred since it is considered robust to model mis-specification (only to the extent that the pseudo-true parameter $\theta_0$ remains meaningful).
+
+#### :x Bootstrap bias correction
+
+Sometimes there is no unbiased estimator. In these cases, the bootstrap bias corrector can help produce a less biased estimator: Sample $b \times n$ times from our empirical observations. For every $b$ calculate the "real" parameter value, average across all $b$, then subtract out the estimator to get an estimate of the systemic bias. This estimate can be removed from the estimator to make a less biased one. (This technique removes the O(1/n) bias term, but not smaller biases. It could also be removed by analytically calculating the bias.)
+
+#### :x Monte Carlo
+
+If one knows (or assumes) the unobservable distribution, one can simply simulate drawing a sample of size $n$, calculating the statistic and then repeating $b$ times to get an empirical distribution for the statistic. As $b \to \infty$, the empirical distribution converges on the statistic's sampling distribution. This technique is called a **Monte Carlo technique**.
+
+#### :x N. P. Bootstrap
+
+This technique is the same as the [:monte carlo method](#x-monte-carlo) except instead of sampling from the true distribution, sample repeatedly from the empirical distribution (i.e your observed sample $x$) which according to the [:Gilvenko-Cantelli theorem](#x-gilvenko-cantelli) should yield the same result for large enough $n$.
+
+#### :x Gilvenko-Cantelli
+
+The **Glivenko-Cantelli theorem** says that an empirical cdf $\hat{F}_n(x)$ based on a sample $X_1, \ldots, X_n$ converges on the unobservable distribution $F$. 
+
+$$\text{sup}_{x\in \mathbb{R}} |\hat F_n(x)-F(x)| \stackrel{p}{\to} 0$$
+
+#### :x MLE
+
+The maximum likelihood estimator $\hat \theta_{MLE}$ is the estimator that maximizes the likelihood of observing our sample $X$ if $\theta$ were equal to $\hat \theta_{MLE}$. In other words, it yields the $\theta$ that is most likely to have yielded our sample.
+
+The MLE estimator can be found by solving the first order conditions of the likelihood function $L$ (or the log of the likelihood function, aka. log-likelihood $l$). The likelihood function is simply the joint probability distribution.
+
+#### :x Rao-Cramer bound
+
+Note: This section only applies to parametric families where the support of the distribution (i.e. the "domain", where $f(x) \neq 0$) is independent of $\theta$.
+
+What is the most efficient estimator? The **rao-cramer bound** provides a partial answer as it says that under certain conditions (see below) the variance of $\hat\theta$ has a lower bound: 
+
+$$Var(\hat\theta)\geq\left(\frac{d}{d\theta}E_\theta[\hat\theta(X)]\right)^2\frac{1}{I(\theta)}$$
+
+where $I(\theta)$ is the Fisher information: 
+
+$$I(\theta)=E_\theta\left[S(\theta\mid X)^2\right]$$
+
+And $S$ is the score 
+
+$$S(\theta \mid x) = \frac{\partial }{\partial \theta}\log f(x\mid\theta)$$
+
 A special case of the Rao-Cramer bound is for unbiased estimators where $E[\hat\theta]=\theta$ so: $$Var(\hat\theta)\geq\frac{1}{I(\theta)}$$
-What does all this mean? Less fisher information means there must be more variance. Our MLE estimator by definition has a score of $0$
+What does all this mean? Less Fisher information means there must be more variance.
+
+MLE estimators by definition have an expected score of $0$.
 
 For an n-dimensional $\theta$, there are two ways to calculate the $n\times n$ Fisher Information matrix.
 1. Calculate the score ($n\times 1$) by taking the derivative of the log likelihood function. Then compute $I=E[S \cdot S^T]$
 2. Compute $I$ by taking the second derivatives of the log likelihood and using the **second information equality**: $$I = - E \left[ \frac{\partial ^2 l}{\partial \theta ^2}\right]$$
-The MLE estimator is both consistent and asymptotically normal with variance approaching the Rao-Cramer bound.
-
-## Part 3: Statistical tests
