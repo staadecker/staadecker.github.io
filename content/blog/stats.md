@@ -6,7 +6,7 @@ tags: communication
 draft: false
 ---
 
-_These are part of my class notes for the MIT course 14.380 Statistics for Economics that I took in the fall of 2025. I wrote up these notes to experiment with Nutshells, expandable boxes [:like this one](#x-nutshells) that should make my notes more accessible to different audiences and easier to navigate. My blog post provides more context. Parts of my notes may be inaccurate or poorly explained, especially the details within Nutshells that I've paid less attention to._
+_These are part of my class notes for the MIT course 14.380 Statistics for Economics that I took in the fall of 2025. I wrote up these notes to experiment with Nutshells, expandable boxes [:like this one](#x-nutshells) that should make my notes more accessible to different audiences and easier to navigate. My blog post [here](https://open.substack.com/pub/staadecker/p/communication-with-nutshells) provides more context. Parts of my notes may be inaccurate or poorly explained, especially the details within Nutshells that I've paid less attention to._
 
 #### :x Nutshells
 
