@@ -23,11 +23,11 @@
 		"@zachleat/heading-anchors": "^1.0.5"
 	},
 	"scripts": {
-		"build": "yarn exec eleventy",
-		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 yarn exec eleventy",
-		"start": "yarn exec eleventy --serve --quiet",
-		"debug": "cross-env DEBUG=Eleventy* yarn exec eleventy",
-		"debugstart": "cross-env DEBUG=Eleventy* yarn exec eleventy --serve --quiet",
-		"benchmark": "cross-env DEBUG=Eleventy:Benchmark* yarn exec eleventy"
+		"build": "yarn eleventy",
+		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 yarn eleventy",
+		"start": "yarn eleventy --serve --quiet",
+		"debug": "cross-env DEBUG=Eleventy* yarn eleventy",
+		"debugstart": "cross-env DEBUG=Eleventy* yarn eleventy --serve --quiet",
+		"benchmark": "cross-env DEBUG=Eleventy:Benchmark* yarn eleventy"
 	}
 }
