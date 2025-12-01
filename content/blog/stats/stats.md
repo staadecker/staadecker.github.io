@@ -573,7 +573,7 @@ Which test is best? There is a concept of the [:uniformly most powerful (UMP) te
 
 We can narrow the space of possible tests to consider by only considering unbiased tests.
 
-Three common tests are the [:likelihood ratio test](#x-likelihood-ratio-test), the lagrange multiplier or score test, and the Wald test.
+Three common tests are the [:likelihood ratio test](#x-likelihood-ratio-test), the [:lagrange multiplier](#x-score-test) or score test, and the [:Wald test](#x-wald-test).
 
 #### :x P values
 
@@ -591,14 +591,40 @@ P-values are [often misunderstood and misleading](https://www.nature.com/article
 
 Given $H_0: \theta = \theta_0$ and $H_1: \theta \neq \theta_0$. If $\theta$ is one-dimensional and the regularity conditions from MLE theory hold, it can be shown that the likelihood ratio test statistic,
 
-$$\lambda(x) = \frac{\mathcal{L}(\theta_0 \mid X)}{\mathcal{L}(\hat\theta_{ML} \mid X)}$$
+$$\lambda(x) = \frac{\mathcal{L}(\hat\theta_0 \mid X)}{\mathcal{L}(\hat\theta_{ML} \mid X)}$$
 
 is a pivotal statistic under $H_0$ such that
 
 $$LR=-2 \log \lambda(X) \stackrel{d}{\to} \chi_1^2$$
 
-where $\mathcal{L}$ is the likelihood function and $\theta_{ML}$ is the maximum likelihood estimator. Alternatively,
+where $\mathcal{L}$ is the likelihood function, $\theta_{ML}$ is the maximum likelihood estimator, and $\hat\theta_0$ is the MLE estimator restricted to the null. Alternatively,
 
-$$LR = 2 \left( l\left(\theta_{ML} \mid X\right)-l\left(\theta_0 \mid X\right)\right)\stackrel{d}{\to} \chi_1^2$$
+$$LR = 2 \left( l\left(\hat\theta_{ML} \mid X\right)-l\left(\hat\theta_0 \mid X\right)\right)\stackrel{d}{\to} \chi_1^2$$
 
 Intuitively this makes sense: the denominator must be larger than the numerator since, by definition, the MLE estimator is the estimator that maximizes $\mathcal{L}$ for a given $X$. As such, $\lambda$ will be between $0$ and $1$ and closer to zero when our null hypothesis is less likely. As a result, $LR$ will be largest when the null hypothesis is least likely which is why we reject the null if $LR$ is greater than the $(1-\alpha)$ quantile of $X_1^2$.
+
+#### :x Wald Test
+
+Often, we're able to show that, under the null,
+
+$$\frac{\sqrt{n}}{\hat\sigma}(\hat \theta - \theta_0) \stackrel{d}{\to} N(0, 1)$$
+
+In those cases, we can use the chi-squared distribution instead of the Normal to generate a cutoff $k$ by using the Wald statistic:
+
+$$W = \frac{n}{\hat\sigma^2}(\hat \theta - \theta_0)^2 \stackrel{d}{\to} \chi_1^2$$
+
+Or in the multi-dimensional case,
+
+$$W=n(\hat \theta - \theta_0)' \hat \Sigma^{-1} (\hat \theta - \theta_0) \stackrel{d}{\to} \chi_1^2$$
+
+#### :x Score Test
+
+The lagrangian multiplier statistic is:
+
+$$LM = \frac{S(\hat\theta_0)^2}{n I_1 (\hat\theta_0)} \stackrel{d}{\to} \chi_1^2$$
+
+where $\hat \theta_0$ is the MLE estimator restricted to the null.
+
+Or in the multi-dimensional case:
+
+$$LM = \frac{1}{n}S(\hat\theta_0)I_1 (\hat\theta_0)^{-1} S(\hat\theta_0)\stackrel{d}{\to} \chi_1^2$$
