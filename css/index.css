@@ -83,6 +83,13 @@ img[src$=".svg"] {
   height: auto;
   max-width: none;
 }
+/* Addition to center images */
+picture {
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+	height: auto;
+}
 video,
 iframe {
 	width: 100%;

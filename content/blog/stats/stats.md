@@ -508,3 +508,97 @@ MLE estimators by definition have an expected score of $0$.
 For an n-dimensional $\theta$, there are two ways to calculate the $n\times n$ Fisher Information matrix.
 1. Calculate the score ($n\times 1$) by taking the derivative of the log likelihood function. Then compute $I=E[S \cdot S^T]$
 2. Compute $I$ by taking the second derivatives of the log likelihood and using the **second information equality**: $$I = - E \left[ \frac{\partial ^2 l}{\partial \theta ^2}\right]$$
+
+## Part 3: Testing
+
+In Part 2, I explained how to use estimators (e.g. $\hat\mu$) to estimate parameters of our real distribution (e.g. $\mu$). In Part 3, we will develop tools to test the extent to which our estimators are accurate.
+
+Testing requires a hypothesis to either accept or reject. This is called the **null hypothesis** $H_0$ and the alternative is automatically defined as the alternative hypothesis $H_1$. For example, our null hypothesis could be that the real average is less than some amount $H_0: \mu \leq \mu_0$ which implies $H_1: \mu > \mu_0$. (This is a one-sided hypothesis.)
+
+In frequentist statistics, the null and alternative hypothesis are not treated equally. Specifically, we don't simply accept the null if $\hat \mu \leq \mu_0$ and reject it if $\hat \mu > \mu_0$. Rather, we choose to accept the null hypothesis if and only if our estimator falls within a **critical region** of our choosing. For example, given the hypotheses above, we would accept $H_0$ if $\hat \mu\leq k$ and reject it otherwise, where $k$ is some cutoff value which defines the boundary of our critical region.
+
+Before discussing how to choose this value of $k$, consider the four possible outcomes for a test as illustrated in the table below.
+
+| | We accept $H_0$ | We reject $H_0$ | 
+| --- | --- | --- |
+| $H_0$ is actually true | Correct decision | Type 1 error |
+| $H_1$ is actually true | Type 2 error | Correct decision |
+
+Ideally, we would want a low probability of type 1 and type 2 errors. To talk about these errors we must define some terms. The **power** of a test is the probability of correctly rejecting the null in a world where the alternative is true: $P_{H_1}\{\hat \mu > k\}$. More power is better. The **size**  of a test is the probability of erroneously rejecting the null in a world where it is true (type 1 error): $P_{H_0}\{\hat\mu > k\}$. Less size is better. 
+
+Notice how power and size have the same functional form. As such, we define $\beta(\mu,k) = P\{\hat \mu > k\}=P\{\text{reject}\}$. We've written $\beta$ (both power and size) as a function of the true parameter $\mu$. Indeed, if say $\mu$ were much smaller than $\mu_0$ then there is a higher probability that the $\hat\mu$ we observe leads us to accepting $H_0$, which means that size would be small. Conversely, if $\mu$ were much greater than $\mu_0$ then our power will be larger. This is illustrated in the figure below which shows two different tests whose power and size depend on the real value of $\mu$.
+
+![Illustration of power and size](./power-and-size.svg)
+
+Now, how do we choose a value for $k$? There tends to be a direct tradeoff between type 1 and 2 errors. In our example, a low value of $k$ will mean we reject $H_0$ more often which increases the power (good) but increases the size (bad). A higher value of $k$ does the opposite. So $k$ must be chosen carefully.
+
+In frequentist statistics, we choose a high $k$ in order to control for the **level** $\alpha$, the maximum size under the null. The philosophy behind this approach is that we tend to believe $H_0$ is true unless something weird happens—something unlikely to happen by chance. To feel confident in a rejection of $H_0$, we need to be sure that the rejection didn't happen by chance, hence why we ensure a small level (the worst case for the size). In this sense, rejection is consequential but acceptance is not. This is why people often write "fail to reject $H_0$" instead of "accept $H_0$" and why people try to pick an $H_0$ they wish to disprove.
+
+The level of a test is closely related to the often misunderstood concept of a [:$p$-value](#x-p-values).
+
+In summary, a test involves two hypotheses $H_0$ and $H_1$, as well as a critical region typically defined by cutoff $k$. A test will either result in accepting or rejecting the null hypothesis, depending on the observed estimator $\hat \mu$. A $p$-value is a statistic indicating the probability of having observed that estimator (or worse) under the worst case of the null, denoted $H_0^*$. Low $p$-values suggest the null may be false, but beware of misinterpretations. To choose a cutoff $k$ we often look at the level, the probability of a type 1 error under $H_0^*$. Mathematically, we could write:
+
+- $H_0(\mu_0), H_1(\mu_0)$ 
+- $\text{Test}(H_0, H_1, k)$
+- $\text{Decision}(\hat\mu;\text{Test}) = \text{Accept / Reject}$
+- $p\text{-value}=P_{H_0^*}\{\hat \mu \text{ or worse}\}$
+- $\beta (\mu;\text{Test})= P\{\text{reject}\}$
+- $\text{Size} = \beta_{H_0}$
+- $\text{Power} = \beta_{H_1}$ 
+- $\text{Level, }\alpha= \beta_{H_0^*}$
+
+To choose a $k$ for a given level $\alpha$, we must be able to calculate $\beta_{H_0^*}=P_{H_0^*}\{\text{reject}\}$. This requires knowing the distribution of our estimator (e.g. $\hat \mu$). We unfortunately can't know this distribution but we could compute a **pivotal statistic** with a known distribution. For example, if (under $H_0^*$) it is known that $\hat\mu \sim N(\mu_0, \sigma^2/n)$ (with known $\sigma$ and $n$) we can create a pivotal statistic with known distribution $z = \frac{\sqrt{n}}{\sigma}(\hat \mu - \mu_0) \sim N(0,1)$ (this is called a z-statistic). From here, we can easily calculate the size $\beta_{H_0^*}$ as follows:
+
+$$
+\begin{align*}
+\alpha &= P_{H_0^*} \{\hat \mu  > k \} \\
+&= P\{z > \sqrt{n}(k-\mu_0)/\sigma \} \\
+&= 1- \Phi\left(\frac{\sqrt{n}}{\sigma}(k-\mu_0)\right)
+\end{align*}
+$$
+
+Similarly, pivotal statistics can be used to calculate $p$-values.
+
+$$
+\begin{align*}
+p\text{-value} &= P_{H_0^*} \{\hat \mu  > \hat\mu_{obs} \} \\
+&= P\{z > \sqrt{n}(\hat\mu_{obs}-\mu_0)/\sigma \} \\
+&= 1- \Phi\left(\frac{\sqrt{n}}{\sigma}(\hat\mu_{obs}-\mu_0)\right)
+\end{align*}
+$$
+
+Note that $k$ values can also be found using bootstrap.
+
+Which test is best? There is a concept of the [:uniformly most powerful (UMP) test](#x-ump), a test for which there is no other critical region with greater power at the same level $\alpha$. Unfortunately, in general, there may be no UMP. However, the [:Neyman-Pearson Lemma](x-Neyman-Pearson Lemma) shows that the UMP exists if the null and the alternative are simple (specifically if $\theta \in {\theta_1, \theta_2}$ and $H_0: \theta=\theta_1$ while $H_1: \theta=\theta_2$). It can be extended to any one-sided test where $f(x \mid \theta)$ satisfies the monotone likelihood ratio property.
+
+We can narrow the space of possible tests to consider by only considering unbiased tests.
+
+Three common tests are the [:likelihood ratio test](#x-likelihood-ratio-test), the lagrange multiplier or score test, and the Wald test.
+
+#### :x P values
+
+In a way, the $p$-value is the converse of the _level_. Both represent the likelihood of incorrectly rejecting the null under the (worst case) of the null. However, the _level_ is a function of the test being used, irrespective of the observed sample while the $p$-value is a statistic (a function of our sample) irrespective of the test. To be specific:
+
+> The $p$-value is the probability _under the worst case of the null_ (denoted $H_0^*$) of getting a sample at least as adverse to the null as the given one.
+
+In our example, this means that the $p$-value is the probability of getting a $\hat\mu$ greater or equal to the one we got in a world where $\mu = \mu_0$ (the worst case of the null).
+
+Since the $p$-value is a statistic it has a distribution. In fact, $p$-values are uniformly distributed from $0$ to $1$ (assuming $\mu = \mu_0$) which is why we obtaining a $p$-value of say $0.01$ is considered rare and indicative that perhaps $\mu \neq \mu_0$.
+
+P-values are [often misunderstood and misleading](https://www.nature.com/articles/506150a). For one, the meaning of p-values is specific to a world where $\mu = \mu_0$. As such, $p$-values only convey significance if we have a strong prior belief that the null hypothesis is true (as discussed above). Secondly, we could obtain very small $p$-values even if the effect were really small (i.e. $\mu > \mu_0$ but only by a tiny bit). As such, statistical significance as indicated by $p$-values is not indicative of "significance" as most people conceive it.
+
+#### :x Likelihood Ratio Test
+
+Given $H_0: \theta = \theta_0$ and $H_1: \theta \neq \theta_0$. If $\theta$ is one-dimensional and the regularity conditions from MLE theory hold, it can be shown that the likelihood ratio test statistic,
+
+$$\lambda(x) = \frac{\mathcal{L}(\theta_0 \mid X)}{\mathcal{L}(\hat\theta_{ML} \mid X)}$$
+
+is a pivotal statistic under $H_0$ such that
+
+$$LR=-2 \log \lambda(X) \stackrel{d}{\to} \chi_1^2$$
+
+where $\mathcal{L}$ is the likelihood function and $\theta_{ML}$ is the maximum likelihood estimator. Alternatively,
+
+$$LR = 2 \left( l\left(\theta_{ML} \mid X\right)-l\left(\theta_0 \mid X\right)\right)\stackrel{d}{\to} \chi_1^2$$
+
+Intuitively this makes sense: the denominator must be larger than the numerator since, by definition, the MLE estimator is the estimator that maximizes $\mathcal{L}$ for a given $X$. As such, $\lambda$ will be between $0$ and $1$ and closer to zero when our null hypothesis is less likely. As a result, $LR$ will be largest when the null hypothesis is least likely which is why we reject the null if $LR$ is greater than the $(1-\alpha)$ quantile of $X_1^2$.
