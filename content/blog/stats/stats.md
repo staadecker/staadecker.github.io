@@ -569,7 +569,9 @@ $$
 
 Note that $k$ values can also be found using bootstrap.
 
-Which test is best? There is a concept of the [:uniformly most powerful (UMP) test](#x-ump), a test for which there is no other critical region with greater power at the same level $\alpha$. Unfortunately, in general, there may be no UMP. However, the [:Neyman-Pearson Lemma](x-Neyman-Pearson Lemma) shows that the UMP exists if the null and the alternative are simple (specifically if $\theta \in {\theta_1, \theta_2}$ and $H_0: \theta=\theta_1$ while $H_1: \theta=\theta_2$). It can be extended to any one-sided test where $f(x \mid \theta)$ satisfies the monotone likelihood ratio property.
+Once we have a test with level $\alpha$, we can easily construct a confidence interval with confidence level $\alpha$, an interval where, under the worst case of the null, the parameter $\theta$ is contained within the set $(1 - \alpha) \%$ of the time. Note that confidence set construction is trickier when dealing with multi-dimensional parameters.
+
+Which test is best? There is a concept of the [:uniformly most powerful (UMP) test](#x-ump), a test for which there is no other critical region with greater power at the same level $\alpha$. Unfortunately, in general, there may be no UMP. However, the [:Neyman-Pearson Lemma](x-Neyman-Pearson Lemma) shows that the UMP exists if the null and the alternative are simple (specifically if $\theta \in {\theta_1, \theta_2}$ and $H_0: \theta=\theta_1$ while $H_1: \theta=\theta_2$). It can be extended to any one-sided test where $f(x \mid \theta)$ satisfies the monotone likelihood ratio property. Moreover, Pratt's theorem says that UMP tests will produce the shortest possible confidence intervals.
 
 We can narrow the space of possible tests to consider by only considering unbiased tests.
 
